@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Erlang &amp OTP - A Quick Introduction</title>
+
+		<meta name="description" content="A quick introduction to the functional programming language and platfrom Erlang and the OTP libraries">
+		<meta name="author" content="Robert Ellen <rellen@ieee.org>">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>Erlang and the OTP libraries</h1>
+					<h3>A quick introduction</h3>
+					<p>
+						<small>Robert Ellen</small>
+					</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>Summary</h2>
+					</section>
+					<section>
+						Erlang and OTP are a language, system and platform that are well-established but experiencing a resurgence in popularity
+					</section>
+					<section>
+						PROMINENT PRODUCTS AND USERS
+					</section>
+					<section>
+						<h3>Erlang and the OTP libraries</h3><p> are a 'battle-tested' platform for developing (soft) real-time software with very high: <ul><li>up-times</li><li> availability</li><li>fault-tolerance</li><li>scalability</li><li> reliability</li></ul></p>
+					</section>
+
+					<section>
+						<h3>Erlang is a functional programming language</h3> <p>that (among many other things):
+							<ul>
+								<li>is strictly evaluated</li>
+								<li>is dynamically typed</li>
+								<li>has single-assignment on 'variables'</li>
+								<li>is impure</li>
+								<li>has its concurrency features (spawning, linking and message passing between light-weight processes) built-in</li>
+							</ul>
+						</p>
+					</section>
+					<section>
+						<h3>Erlang is also a system</h3> <p>that (among many other things):
+							<ul>	
+								<li>implements light-weight processes (a.k.a. green-threads, actors)</li>
+								<li>isolates processes from each other</li>
+								<li>efficiently utilises multi-core systems to achieve parallelism on top of concurrency</li>
+								<li>can scale from multi-core to distributed with very little (if any) code change
+								<li>allows new/ improved code to be hot-loaded</li>
+								<li>has multiple facilities to integrate with other languages, esp C/Java/.NET</li>
+							</ul>
+						</p>  
+					</section>
+					<section>
+						<h3>The OTP libraries</h3> <p>are a set of well-tested libraries (and design principles) that actually allow the Erlang platform to do what it says it can do on the box:
+						<ul>
+							<li>fault-tolerance</li>
+							<li>high availability and up-time</li>
+							<li>granular management of highly-concurrent systems</li>
+							<li>live patching of systems in production!</li>
+							<li>web-scale!</li>
+						</ul>
+						</p>
+						<p>&nbsp;</p>
+						<p>OTP is the <del>recommended</del> <b>only sane</b> way to develop non-trivial Erlang-based production software</p>
+
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Overview</h2>
+						<ul>
+							<li>A quick history lesson</li>
+							<li>Erlang: basics of the language</li>
+							<li>Erlang: the system</li>
+							<li>Erlang: more advanced features
+							<li>The OTP libraries</li>
+							<li>Uses: What, where and how</li>
+							<li>Next steps</li>
+
+						</ul>
+					</section>
+					<section>
+						<h2>About me...</h2>
+						<ul>
+							<li>electronics/ software engineer by qualification</li>
+							<li>long-term contractor at Carlton &amp; Unitied Breweries' Yatala brewery</li>
+							<li>software development and industrial informatics a.k.a. plant information systems</li>
+							<li>interested in FP due to ongoing Masters-level research into dataflow programming and functional reactive programming (FRP)</li>
+							<li>using Erlang (among other tools) to implement/ demonstrate my ideas</li>
+						</ul>
+
+					</section>
+
+				</section>
+
+				<section>
+					<h2>A brief history of Erlang and OTP</h2>
+					<p>Summary from Erlang Programming, Cesarini &amp; Thompson O'Reilly Media Inc, and various resources found on the Erlang Wikipedia entry</p>
+							
+
+
+				</section>
+
+
+				<section>
+					Mid 1980's - Ericsson's Computer Science Laboratory tasked with investigating languages for next generation telecom products
+
+				</section>
+
+				<section>
+					<p>Joe Armstrong, Robert Virding and Mike Williams were tasked with prototyping telecom applications with existing languages</p>
+					<p>They found that no one langauge provided everything that a telecom application needed</p>
+					<p>A decision was made to invent a new language</p>
+					<p>Erlang (Ericsson Language) was born!</p>
+
+				</section>
+
+				<section>
+					<p>Erlang was influenced by several languages</p>
+					<ul>
+						<li>functional: ML, Miranda</li>
+						<li>concurrent: Ada, Modula, Chill</li>
+						<li>logic: Prolog</li>
+						<li>others: Smalltalk (code upgrade) and EriPascal and PLEX (older Ericsson languages)</li>
+					</ul>
+
+
+				</section>
+
+				<section>
+					<p>Originally implemented with a Prolog VM, Erlang was refined over four years</p>
+					<p>Mike Williams wrote the first C-based VM in 1991</p>
+					<p>In 1992 the first commercial Erlang-based project was started and was launched in 1994</p>
+
+				</section>
+
+				<section>
+					<p>In 1995, Erlang was mature enough to be used in larger telephony projects</p>
+					<p>The OTP libraries were released in 1996</p>
+					<p>In 1998, the AXD301 switch was announced, and reportedly has over 1 million lines of Erlang, achieving nine 9's uptime</p>
+
+				</section>
+
+				<section>
+					<p>In early 1998, Erlang was banned from Ericsson, citing a want to be a consumer of software technologies, not a producer</p>
+					<p>In late 1998, Erlang and OTP were released under an Open Source license and have been freely available ever since</p>
+					<p>Joe Williams and many of the Erlang team left Ericsson at that time, but subsequently the ban has been lifted and Williams rejoined in 2004</p>
+
+				</section>
+
+				<section>
+					<h2>Erlang: basics of the language</h2>
+				</section>
+
+				<section>
+					<section>
+						<h3>Erlang, as a language, is fairly simple</h3>
+					</section>
+					<section>
+						Doesn't have the functional programming machinery of Haskell or Scala 
+					</section>
+					<section>
+						Simple, dynamic type system 
+					</section>
+					<section>
+						<p>Functional language features:</p> 
+						<ul>
+							<li>Lamda expressions and closures are simple</li>
+							<li>but currying and partial application are hard, if not impossible</li>
+							<li>powerful pattern matching</li>
+							<li>Erlang is strictly/eagerly evaluated, so no infinite lists etc</li>
+							<li>functions, while declarative and SSA, are impure, side effects can occur in any context</li>
+							<li>it could be argued, however, that side-effects occur only through the actor/ process interface</li>
+						</ul>
+					</section>
+					<section>
+						<p>Erlang compiler (erlc) is not as powerful as, say, GHC</p>
+						<br />
+
+						<p>For example, it is not as helpful with things such as automatic loop/fold simplification</p>
+					
+					</section>
+
+				</section>
+
+				<section>
+
+					<h3>So let's look at the basics of the language</h3>
+
+				</section>
+
+				<section>
+
+					<h3>Some simple Erlang in the shell</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">
+<span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">=</span> <span style="color: #666666">5</span>.
+<span style="color: #888888">5</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">Y</span> <span style="color: #666666">=</span> <span style="color: #666666">2</span>.
+<span style="color: #888888">2</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #B8860B">Z</span> <span style="color: #666666">=</span> <span style="color: #B8860B">X</span> <span style="color: #666666">*</span> <span style="color: #B8860B">Y</span>.
+<span style="color: #888888">10</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">=</span> <span style="color: #666666">4</span>.
+<span style="color: #0044DD">** exception error: no match of right hand side value 4</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #666666">2</span> <span style="color: #666666">=</span> <span style="color: #B8860B">Y</span>.
+<span style="color: #888888">2</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> 
+</pre></div>
+
+						
+
+				</section>
+
+				<section>
+
+					<h3>Atoms</h3>
+
+					<p>Like a symbol or enum</p>
+
+				
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">
+<span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">Name</span> <span style="color: #666666">=</span> bob.
+<span style="color: #888888">bob</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">AnotherName</span> <span style="color: #666666">=</span> &#39;Alice&#39;.
+<span style="color: #888888">&#39;Alice&#39;</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #AA22FF">is_list</span>(<span style="color: #B8860B">AnotherName</span>).
+<span style="color: #888888">false</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #AA22FF">is_atom</span>(<span style="color: #B8860B">AnotherName</span>).
+<span style="color: #888888">true</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #B8860B">StringName</span> <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;Alice&quot;</span>.
+<span style="color: #888888">&quot;Alice&quot;</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> <span style="color: #AA22FF">is_atom</span>(<span style="color: #B8860B">StringName</span>).
+<span style="color: #888888">false</span>
+<span style="color: #000080; font-weight: bold">7&gt;</span> 
+</pre></div>
+
+
+				</section>
+
+				<section>
+
+					<h3>Booleans</h3>
+
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">
+<span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> true <span style="color: #AA22FF; font-weight: bold">or</span> false.
+<span style="color: #888888">true</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> true <span style="color: #AA22FF; font-weight: bold">and</span> false.
+<span style="color: #888888">false</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> true <span style="color: #AA22FF; font-weight: bold">xor</span> false.
+<span style="color: #888888">true</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> false <span style="color: #AA22FF; font-weight: bold">orelse</span> true.
+<span style="color: #888888">true</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> true <span style="color: #AA22FF; font-weight: bold">andalso</span> false.
+<span style="color: #888888">false</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> 
+</pre></div>
+
+
+
+				</section>
+
+				<section>
+					<h3>Lists</h3>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">
+<span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">Tail</span> <span style="color: #666666">=</span> [<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>].
+<span style="color: #888888">[2,3,4]</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">Head</span> <span style="color: #666666">=</span> <span style="color: #666666">1</span>.
+<span style="color: #888888">1</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #B8860B">MyList</span> <span style="color: #666666">=</span> [<span style="color: #B8860B">Head</span>|<span style="color: #B8860B">Tail</span>].
+<span style="color: #888888">[1,2,3,4]</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #B8860B">MyNewList</span> <span style="color: #666666">=</span> <span style="color: #B8860B">MyList</span> <span style="color: #666666">++</span> [<span style="color: #666666">5</span>|[]].
+<span style="color: #888888">[1,2,3,4,5]</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> 
+</pre></div>
+
+				</section>
+
+				<section>
+					<h3>List elements</h3>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">
+<span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">MyList</span> <span style="color: #666666">=</span> [ok, <span style="color: #BB4444">&quot;Error&quot;</span>, <span style="color: #666666">123</span>].
+<span style="color: #888888">[ok,&quot;Error&quot;,123]</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">LoL</span> <span style="color: #666666">=</span> [[<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>],[<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>],[<span style="color: #666666">7</span>,<span style="color: #666666">8</span>,<span style="color: #666666">9</span>]].
+<span style="color: #888888">[[1,2,3],[4,5,6],[7,8,9]]</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> 
+</pre></div>
+
+				</section>
+
+				<section>
+					<h3>Lists comprehensions</h3>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">
+<span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">MyList</span> <span style="color: #666666">=</span> [<span style="color: #B8860B">X</span> || <span style="color: #B8860B">X</span> <span style="color: #666666">&lt;-</span> [<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,a,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,b,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>], <span style="color: #B8860B">X</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">3</span>].
+<span style="color: #888888">[a,4,b,5,6]</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">MyIntegerList</span> <span style="color: #666666">=</span> [<span style="color: #B8860B">X</span> || <span style="color: #B8860B">X</span> <span style="color: #666666">&lt;-</span> [<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,a,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,b,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>], integer(<span style="color: #B8860B">X</span>), <span style="color: #B8860B">X</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">3</span>].
+<span style="color: #888888">[4,5,6]</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #B8860B">MyIntegerListPlusOne</span> <span style="color: #666666">=</span> [<span style="color: #B8860B">X</span><span style="color: #666666">+1</span> || <span style="color: #B8860B">X</span> <span style="color: #666666">&lt;-</span> [<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,a,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,b,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>], integer(<span style="color: #B8860B">X</span>), <span style="color: #B8860B">X</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">3</span>].
+<span style="color: #888888">[5,6,7]</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> 
+</pre></div>
+Note the lack of an error at line 1
+
+
+
+				</section>
+
+				<section>
+					<h3>Tuples</h3>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">Name</span> <span style="color: #666666">=</span> <span style="color: #BB4444">&quot;Alice&quot;</span>, <span style="color: #B8860B">Age</span> <span style="color: #666666">=</span> <span style="color: #666666">25</span>.
+<span style="color: #888888">25</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">Alice</span> <span style="color: #666666">=</span> {<span style="color: #B8860B">Name</span>, <span style="color: #B8860B">Age</span>}.
+<span style="color: #888888">{&quot;Alice&quot;,25}</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #B8860B">Bob</span> <span style="color: #666666">=</span> {<span style="color: #BB4444">&quot;Bob&quot;</span>, <span style="color: #666666">22</span>}.
+<span style="color: #888888">{&quot;Bob&quot;,22}</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> {<span style="color: #B8860B">BobName</span>,<span style="color: #B8860B">BobAge</span>} <span style="color: #666666">=</span> <span style="color: #B8860B">Bob</span>.
+<span style="color: #888888">{&quot;Bob&quot;,22}</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #B8860B">BobName</span>.
+<span style="color: #888888">&quot;Bob&quot;</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> {<span style="color: #B8860B">BobName</span>,_} <span style="color: #666666">=</span> <span style="color: #B8860B">Bob</span>.
+<span style="color: #888888">{&quot;Bob&quot;,22}</span>
+<span style="color: #000080; font-weight: bold">7&gt;</span> {_,<span style="color: #B8860B">AliceAge</span>} <span style="color: #666666">=</span> <span style="color: #B8860B">Alice</span>.
+<span style="color: #888888">{&quot;Alice&quot;,25}</span>
+<span style="color: #000080; font-weight: bold">8&gt;</span> <span style="color: #B8860B">AliceAge</span>.
+<span style="color: #888888">25</span>
+<span style="color: #000080; font-weight: bold">9&gt;</span> {_,_} <span style="color: #666666">=</span> <span style="color: #B8860B">Alice</span>.
+<span style="color: #888888">{&quot;Alice&quot;,25}</span>
+<span style="color: #000080; font-weight: bold">10&gt;</span> {_,_,_} <span style="color: #666666">=</span> <span style="color: #B8860B">Alice</span>.
+<span style="color: #0044DD">** exception error: no match of right hand side value {&quot;Alice&quot;,25}</span>
+<span style="color: #000080; font-weight: bold">11&gt;</span> <span style="color: #B8860B">MyTuple</span> <span style="color: #666666">=</span> {myTuple, [<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>], {ok, <span style="color: #BB4444">&quot;Error&quot;</span>, <span style="color: #666666">123</span>, [{<span style="color: #666666">1</span>,<span style="color: #666666">2</span>},{<span style="color: #666666">3</span>,<span style="color: #666666">4</span>}]}}.
+<span style="color: #888888">{myTuple,[1,2,3],{ok,&quot;Error&quot;,123,[{1,2},{3,4}]}}</span>
+<span style="color: #000080; font-weight: bold">12&gt;</span> 
+</pre></div>
+
+
+				</section>
+
+				<section>
+					<h3>Working with binary data</h3>
+				</section>
+
+				<section>
+					<h3>Binary Operations</h3>
+				</section>
+
+				<section>
+					<h3>Binary strings</h3>
+				</section>
+
+				<section>
+					<h2>Modules and Functions</h2>
+				</section>
+
+				<section>
+					<p>Modules:</p>
+					<ul>
+						<li>are a collection of functions and other declarations and definitions</li>
+						<li>have a name, and are implemented in a file called <code>moduleName.erl</code></li>
+						<li>global namespace</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>A simple module</h3>
+
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(my_module). <span style="color: #008800; font-style: italic">% module name, must be saved in a file called my_module.erl</span>
+<span style="color: #008800; font-style: italic">% module attributes</span>
+-<span style="color: #999999; font-weight: bold">export</span>([add<span style="color: #666666">/2</span>, square<span style="color: #666666">/1</span>, square_add<span style="color: #666666">/2</span>, print_square<span style="color: #666666">/1</span>]). <span style="color: #008800; font-style: italic">% functions (with arity) to be exported</span>
+
+<span style="color: #008800; font-style: italic">% function declarations</span>
+
+<span style="color: #00A000">add</span>(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #B8860B">Y</span>.
+
+<span style="color: #00A000">square</span>(<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #B8860B">X</span> <span style="color: #666666">*</span> <span style="color: #B8860B">X</span>.
+
+<span style="color: #00A000">square_add</span>(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #B8860B">Z</span> <span style="color: #666666">=</span> add(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>),
+	square(<span style="color: #B8860B">Z</span>).
+
+<span style="color: #00A000">print_square</span>(<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span>(<span style="color: #BB4444">&quot;The square of </span><span style="color: #BB6688; font-weight: bold">~p</span><span style="color: #BB4444"> is: </span><span style="color: #BB6688; font-weight: bold">~p</span><span style="color: #BB6622; font-weight: bold">\n</span><span style="color: #BB4444">&quot;</span>, [<span style="color: #B8860B">X</span>, square(<span style="color: #B8860B">X</span>)]).
+</pre></div>
+
+				</section>
+
+				<section>
+					<h3>Compiling and using my_module</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> c(my_module).
+<span style="color: #888888">{ok,my_module}</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">my_module</span>:<span style="color: #00A000">add</span>(<span style="color: #666666">1</span>,<span style="color: #666666">2</span>).
+<span style="color: #888888">3</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #0000FF; font-weight: bold">my_module</span>:<span style="color: #00A000">square_add</span>(<span style="color: #666666">3</span>,<span style="color: #666666">5</span>).
+<span style="color: #888888">64</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #0000FF; font-weight: bold">my_module</span>:<span style="color: #00A000">print_square</span>(<span style="color: #666666">9</span>).
+<span style="color: #888888">The square of 9 is: 81</span>
+<span style="color: #888888">ok</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> 
+</pre></div>
+
+<br /><ul><li>Line 1 (<code>c(my_module).</code>) creates <code>my_module.beam</code>, which is the byte-code file for the module that gets executed</li>
+<li> <code>my_module.beam</code> can also be generated by the Erlang compiler on the command-line with <code>$erlc my_module.erl</code></li></ul>  
+
+				</section>
+
+				<section>
+					<h3>Hot module reloading</h3>
+				</section>
+
+				<section>
+					<h3>Macros</h3>
+
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(my_macros).
+
+-<span style="color: #999999; font-weight: bold">compile</span>(export_all).
+
+-<span style="color: #999999; font-weight: bold">define</span>(<span style="color: #880000">PI</span>, <span style="color: #666666">3</span>.<span style="color: #666666">14</span>).
+
+-<span style="color: #999999; font-weight: bold">define</span>(<span style="color: #880000">Mul</span>(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>),<span style="color: #B8860B">X</span><span style="color: #666666">*</span><span style="color: #B8860B">Y</span>).
+
+<span style="color: #00A000">circ</span> (<span style="color: #B8860B">D</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #666666">?</span><span style="color: #B8860B">Mul</span>(<span style="color: #B8860B">D</span>, <span style="color: #666666">?</span><span style="color: #B8860B">PI</span>).
+</pre></div>
+
+
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> c(my_macros).
+<span style="color: #888888">{ok,my_macros}</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">my_macros</span>:<span style="color: #00A000">circ</span>(<span style="color: #666666">2</span>). 
+<span style="color: #888888">6.28</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> 
+</pre></div>
+
+
+				</section>
+
+				<section>
+					<h3>Built-in Macros and conditionals</h3>
+
+					<ul>
+						<li><code>?MODULE</code></li>
+						<li><code>?FILE</code></li>
+						<li><code>?LINE</code></li>
+					</ul>
+
+					<p>&nbsp;</p>
+
+					<ul>
+						<li><code>-ifdef().</code></li>
+						<li><code>-else.</code></li>
+						<li><code>-endif.</code></li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Pattern Matching - function clauses</h3>
+
+				</section>
+
+
+				<section>
+					<h3>Guards</h3>
+
+				</section>
+
+				<section>
+					<h3>Pattern Guards</h3>
+
+				</section>
+
+				<section>
+					<h3>Case</h3>
+
+				</section>
+
+				<section>
+					<h3>More about types</h3>
+				</section>
+
+				<section>
+					<h3>Type conversion</h3>
+					<p>Erlang is dynamically typed, but also strongly typed, so there is no implicit type conversion</p>
+
+				</section>
+
+				<section>
+					<h3>Type guards</h3>
+
+				</section>
+
+				<section>
+					<h3>Recursion and TCO</h3>
+
+				</section>
+
+				<section>
+					<h3>Higher Order Functions</h3>
+					<p>There is a first-class type called <code>fun</code></p>
+					add(X,Y) ->
+								X() + Y().
+
+				</section>
+
+				<section>
+					<h3>Closures</h3>
+
+				</section>
+
+				<section>
+					<h3>List HoFs</h3>
+					<code>lists</code> module
+					<p> filter, map, foldl, foldr, foreach </p>
+
+				</section>
+
+				<section>
+					<h3>Errors and Exceptions</h3>
+
+				</section>
+
+				<section>
+					<h3>compile time errors</h3>
+
+				</section>
+
+				<section>
+					<h3>runtime errors</h3>
+
+				</section>
+
+				<section>
+					<h3>Exceptions: errors, exits, throws</h3>
+
+				</section>
+
+				<section>
+					<h3>Data Structures</h3>
+
+				</section>
+
+				<section>
+					<h3>Records - tuples with an interface</h3>
+
+				</section>
+
+				<section>
+					<h3>KV stores</h3>
+						<ul>
+							<li>small</li>
+								<ul>
+									<li>proplist</li>
+									<li>orddict</li>
+								</ul>
+							<li>large</li>
+								<ul>
+									<li>dict</li>
+									<li>GB trees (general balanced)</li>
+								</ul>
+							<li>sets</li>
+								<ul>
+									<li>ordsets</li>
+									<li>sets</li>
+									<li>gb_sets</li>
+									<li>sofs (set of sets)</li>
+								</ul>
+							<li>digraphs</li>
+							<li>queues</li></ul>
+
+				</section>
+
+				<section>
+					<h2>Concurrency</h2>
+					Built into the language and runtime, not the OS and not a library
+
+				</section>
+
+				<section>
+					<h3>Erlang processes</h3>
+					Light-weight processes, actor model, message passing
+
+				</section>
+
+				<section>
+					<h3>Spawning a process</h3>
+
+				</section>
+
+				<section>
+					<h3>Sending a message</h3>
+
+				</section>
+
+				<section>
+					<h3>Receiving a message</h3>
+
+				</section>
+
+				<section>
+					<h3>Maintaining state</h3>
+
+				</section>
+
+				<section>
+					<h3>Delays</h3>
+
+				</section>
+
+				<section>
+					<h3>Selective receive</h3>
+
+				</section>
+
+				<section>
+					<h3>links</h3>
+					link
+					spawn_link
+
+				</section>
+
+				<section>
+					<h3>system processes</h3>
+					trap exit signals and convert to messages
+
+				</section>
+
+				<section>
+					<h3>Monitors</h3>
+
+				</section>
+
+				<section>
+					<h3>Named processes</h3>
+					Pids are transient
+
+				</section>
+
+				<section>
+					<h2>Erlang: the system</h2>
+
+				</section>
+
+				<section>
+					<h3>ERTS - Erlang Runtime System</h3>
+					<ul>
+						<li>written in C</li>
+						<li>BEAM - Bogdan's Erlang Abstract Machine (VM)</li>
+						<li>compilation to byte code and interpreted, although native JIT compilers can be used (HiPE)</li>
+					</ul>
+
+				</section>
+
+				<section>
+					<h3>Erlang processes and scheduler</h3>
+					<ul>
+						<li>Erlang processes are light-weight processes, ~300 words memory each, created in microseconds</li>
+						<li>ERTS manages links and messages between processes</li>
+						<li>ERTS is a single OS process, uses one thread per CPU core for concurrency in SMP systems</li>
+						<li>n:m mapping between Erlang processes and OS threads</li>
+						<li>scheduler handles a pool of processes in a run queue</li>
+						<li>processes can be moved between schedulers to load balance</li>
+					</ul>
+
+				</section>
+
+				<section>
+					<h3>I/O</h3>
+						non-blocking event-based IO
+
+				</section>
+
+				<section>
+					<h3>Memory Management</h3>
+					<ul>
+						<li>Erlang/ERTS manages memory automatically</li>
+						<li>generational copying grabage collector</li>
+							<ul>
+								<li>two alternating heaps (to-space and from-space), only active memory is copied to to-space heap, from-space is wiped</li>
+								<li>two generations of the heap</li>
+								<ul>
+									<li>shallow GC only looks at the current generation, after three GCs current will become old</li>
+									<li>deep GC checks old as well, only triggered when shallow does not recycle enough memory</li>
+								</ul>
+							</ul>
+						<li>process isolation means individual processes can be stopped for GC without others being affected</li>
+						<li>short lived processes may never be GC'd (just deallocated)</li>
+						<li>small processes are quick to GC</li>
+					</ul>
+
+				</section>
+
+				<section>
+					<h2>Erlang: more advanced features</h2>
+
+				</section>
+
+				<section>
+					<h3>Distributed Erlang</h3>
+					<ul>
+						<li>Erlang nodes - ERTS instance</li>
+						<li>clusters of nodes with location service</li>
+						<li>Pids are location transparent</li>
+						<li>RPC and remote spawning have similar interface to local</li>
+					</ul>
+
+				</section>
+
+				<section>
+					<h3>ETS and DETS</h3>
+					Erlang Term Storage, KV store with process interface
+
+				</section>
+
+				<section>
+					<h3>Interfacing with other languages</h3>
+					<ul>
+						<li>C/C++ - NIFs, Port Programms, Linked In Port Drivers</li>
+						<li>Java</li>
+						<li>.Net</li>
+						<li>other</li>
+					</ul>
+
+				</section>
+
+				<section>
+					<h3>Developer Tools</h3>
+					<ul>
+						<li>Process manager</li>
+						<li>dbg tracers</li>
+						<li>eunit</li>
+						<li>build tools - rebar</li>
+						<li>dialyzer</li>
+					</ul>
+
+				</section>
+
+				<section>
+
+
+				</section>
+
+
+
+				<section>
+					<h2>The OTP Libraries</h2>
+					<p>
+						
+					</p>
+				</section>
+
+					<section>Why</section>
+
+					<section>behviours</section>
+
+					<section><h3>gen_server</h3>
+						<ul><li>API</li>
+						<li>Behaviour interface (callback functions)</li>
+						<li>internal</li></li></section>
+
+					<section><h3>OTP applications</h3>
+						<ul><li>directory structure</li>
+						<li>start (usually supervisor) and stop</li></li></section>
+
+					<section><h3>OTP supervisors</h3>
+						<ul><li>supervision tree (gen_servers etc at the leaf nodes)</li>
+						<li>fault tolerance</li></li></section>
+
+
+					<section>Mnesia</section>
+
+
+
+
+				<section>
+					<h2>Uses outside Ericsson</h2>
+					<p>
+						
+					</p>
+
+
+				</section>
+
+				<section>
+					<h2>Next</h2>
+					<p>
+						
+					</p>
+				</section>
+
+					<section>If you're only going to learn one functional language...</section>
+
+					<section>Resources
+
+						<p>Books - some really original names here!
+
+							<p>Recommended:
+
+								<p>Learn You Some Erlang for Great Good! - Fred Hebert
+<p>
+								Erlang and OTP in Action - Logan, Merritt &amp; Carlsson 
+<p>
+							For reference:
+
+								<p>Programming Erlang - Joe Armstrong
+
+								<p>Erlang Programming - Cesarini &amp; Thompson
+
+
+						<p>Talks
+
+							<p>Bernard from LCA
+
+							<p>??
+
+						<p>Movies
+							<p>Erlang the Movie
+
+							<p>Erlang the Movie II (warning - adult themes)
+
+
+
+
+				</section>
+
+				
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

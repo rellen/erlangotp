@@ -1,0 +1,143 @@
+runamuck:~ robert$ erl
+Erlang R16B02 (erts-5.10.3) [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+
+Eshell V5.10.3  (abort with ^G)
+1> X = 5.
+5
+2> Y = 2.
+2
+3> Z = X * Y.
+10
+4> X = 4.
+** exception error: no match of right hand side value 4
+5> 2 = Y.
+2
+6> 
+
+
+Erlang R16B02 (erts-5.10.3) [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+
+Eshell V5.10.3  (abort with ^G)
+1> Name = bob.
+bob
+2> AnotherName = 'Alice'.
+'Alice'
+3> is_list(AnotherName).
+false
+4> is_atom(AnotherName).
+true
+5> StringName = "Alice".
+"Alice"
+6> is_atom(StringName).
+false
+7> 
+
+
+
+
+Erlang R16B02 (erts-5.10.3) [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+
+Eshell V5.10.3  (abort with ^G)
+1> true or false.
+true
+2> true and false.
+false
+3> true xor false.
+true
+4> false orelse true.
+true
+5> true andalso false.
+false
+6> 
+
+
+
+
+Erlang R16B02 (erts-5.10.3) [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+
+Eshell V5.10.3  (abort with ^G)
+1> Tail = [2,3,4].
+[2,3,4]
+2> Head = 1.
+1
+3> MyList = [Head|Tail].
+[1,2,3,4]
+4> MyNewList = MyList ++ [5|[]].
+[1,2,3,4,5]
+5>
+
+
+Erlang R16B02 (erts-5.10.3) [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+
+Eshell V5.10.3  (abort with ^G)
+1> MyList = [ok, "Error", 123].
+[ok,"Error",123]
+2> LoL = [[1,2,3],[4,5,6],[7,8,9]].
+[[1,2,3],[4,5,6],[7,8,9]]
+3> 
+
+
+
+Erlang R16B02 (erts-5.10.3) [source] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+
+Eshell V5.10.3  (abort with ^G)
+1> MyList = [X || X <- [1,2,a,3,4,b,5,6], X > 3].
+[a,4,b,5,6]
+2> MyIntegerList = [X || X <- [1,2,a,3,4,b,5,6], integer(X), X > 3].
+[4,5,6]
+3> MyIntegerListPlusOne = [X+1 || X <- [1,2,a,3,4,b,5,6], integer(X), X > 3].
+[5,6,7]
+4> 
+
+
+
+Eshell V5.10.3  (abort with ^G)
+1> Name = "Alice", Age = 25.
+25
+2> Alice = {Name, Age}.
+{"Alice",25}
+3> Bob = {"Bob", 22}.
+{"Bob",22}
+4> {BobName,BobAge} = Bob.
+{"Bob",22}
+5> BobName.
+"Bob"
+6> {BobName,_} = Bob.
+{"Bob",22}
+7> {_,AliceAge} = Alice.
+{"Alice",25}
+8> AliceAge.
+25
+9> {_,_,_} = Alice.
+** exception error: no match of right hand side value {"Alice",25}
+10> 
+
+
+
+Eshell V5.10.3  (abort with ^G)
+1> c(my_module).
+{ok,my_module}
+2> my_module:add(1,2).
+3
+3> my_module:square_add(3,5).
+64
+4> my_module:print_square(9).
+The square of 9 is: 81
+ok
+5> 
+
+
+
+
+
+Eshell V5.10.3  (abort with ^G)
+1> c(my_macros).
+{ok,my_macros}
+2> my_macros:circ(2). 
+6.28
+3> 
+
+
+
+
+
