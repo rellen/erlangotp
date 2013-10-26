@@ -60,32 +60,10 @@
 					</section>
 
 					<section>
-						<h3>What is Erlang?</h3>
-
-						<p>Erlang is a dynamic programming language with functional features</p>
-						
+						While Erlang as a language is simple (and controversial), it is the power and reliability of the Erlang runtime/VM and the OTP libraries that make the Erlang platform a compelling choice for developing robust (soft) real-time software
 					</section>
 
-					<section>
-						<h3>What is Erlang?</h3>
-
-						<p>Erlang has a runtime system (ERTS) that provides powerful and efficient concurrency, parallelism and distribution</p>
-						
-					</section>
-
-					<section>
-						<h3>What is Erlang?</h3>
-
-						<p>The Erlang distribution comes with a set of libraries known as the Open Telecom Platform (OTP) that actually allow the Erlang platform to do what it says it can do on the box</p>
-						
-					</section>
-
-					<section>
-						<h3>What is Erlang?</h3>
-
-						<p>It is the power and reliability of ERTS and OTP that make the Erlang platform a compelling choice for developing robust and performant real-time server applications</p>
-
-					</section>
+					
 					
 					
 				</section>
@@ -104,10 +82,11 @@
 					<section>
 						<h2>Overview</h2>
 						<ul>
+							<li>What is Erlang?</li>
 							<li>A quick history lesson</li>
-							<li>Erlang: basics of the language</li>
-							<li>Erlang: the system</li>
-							<li>Erlang: more advanced features
+							<li>basics of the language</li>
+							<li>the runtime system</li>
+							<li>more advanced features<li>
 							<li>The OTP libraries</li>
 							<li>Uses: What, where and how</li>
 							<li>Next steps</li>
@@ -117,6 +96,36 @@
 					
 
 				</section>
+
+				<section>
+						<h3>What is Erlang?</h3>
+
+						<p>Erlang is a dynamic programming language with functional features</p>
+
+						<p>Labeling Erlang a functional language is controversial, especially if it is compared against FP languages such as Haskell</p>
+						
+					</section>
+
+					<section>
+						<h3>What is Erlang?</h3>
+
+						<p>Erlang has a runtime system (ERTS) that provides powerful and efficient concurrency, parallelism and distribution</p>
+						
+					</section>
+
+					<section>
+						<h3>What is Erlang?</h3>
+
+						<p>The Erlang distribution comes with a set of libraries known as the Open Telecom Platform (OTP) that actually allow the Erlang platform to do what it says it can do on the box, with regards to robustness etc</p>
+						
+					</section>
+
+					<section>
+						<h3>What is Erlang?</h3>
+
+						<p>Most of the time, when we think of Erlang and its capabilities, we are really referring to ERTS and OTP</p>
+
+					</section>
 
 				<section>
 					<h2>A brief history of Erlang and OTP</h2>
@@ -228,20 +237,22 @@
 				</section>
 
 				<section>
-						<h3>Concise set of basic types - no major surprises</h3>
+						<h3>Concise set of basic types</h3>
 						<ul>
 							<li>Numbers (integers, floats)</li>
-							<li>Booleans</li>
 							<li>Atoms (like symbols)</li>
+							<li>References</li>
+							<li>Binaries - excellent expressiveness</li>
+							<li>Pids - process identifiers for Erlang processes (more later)</li>
+							<li>Ports</li>
+							<li>Funs - first-class function variables / closures</li>
+							<li>Tuples (like structures)</li>
 							<li>Lists</li>
 							<ul>
 								<li>cons syntax</li>
 								<li>comprehension syntax</li>
 								<li>abstractions and traversals</li>
 							</ul>
-							<li>Tuples (like structures)</li>
-							<li>awesome support for working expressively with binary data</li>
-							<li>funs - first-class function variables</li>
 						</ul>
 					</section>
 
