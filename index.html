@@ -103,6 +103,8 @@
 						<p>Erlang is a dynamic programming language with functional features</p>
 
 						<p>Labeling Erlang a functional language is somewhat controversial, especially if it is compared against FP languages such as Haskell</p>
+
+						<p>The sequential sub-set of Erlang is, however, pretty much functional</p>
 						
 					</section>
 
@@ -154,7 +156,7 @@
 					<ul>
 						<li>functional: ML, Miranda</li>
 						<li>concurrent: Ada, Modula, Chill</li>
-						<li>logic: Prolog</li>
+						<li>logic: Prolog </li>
 						<li>others: Smalltalk (code upgrade) and EriPascal and PLEX (older Ericsson languages)</li>
 					</ul>
 
@@ -171,7 +173,7 @@
 				<section>
 					<p>In 1995, Erlang was mature enough to be used in larger telephony projects</p>
 					<p>The OTP libraries were released in 1996</p>
-					<p>In 1998, the AXD301 switch was announced, and reportedly has over 1 million lines of Erlang, achieving nine 9's uptime</p>
+					<p>In 1998, the AXD301 switch was announced, and reportedly has 1-2 million lines of Erlang and achieved nine 9's uptime</p>
 
 				</section>
 
@@ -184,18 +186,23 @@
 				</section>
 
 				<section>
-					<h2>Erlang: basics of the language</h2>
+					<h2>Basics of the language</h2>
 				</section>
 
 				<section>
 					<section>
 						<h3>Erlang, as a language, is fairly simple and concise</h3>
 						<ul>
-							<li>strictly evaluated</li>
-							<li>has a simple dynamic type system</li>
-							<li>has single assignment on 'variables'</li>
-							<li>is impure</li>
-							<li>has its concurrency features (spawning, linking and message passing between light-weight processes) built-in</li>
+							<li>Sequential subset</li>
+							<ul>
+								<li>strictly evaluated</li>
+								<li>has a simple dynamic, yet strong type system</li>
+								<li>has single assignment on 'variables'</li>
+							</ul>
+							<li>has its concurrency features built into the language and type system themselves (not a library)</li>
+							 	<ul>
+							 		<li>spawning, linking and message passing between light-weight processes</li>
+							 	</ul>
 						</ul>
 					</section>
 
@@ -206,7 +213,9 @@
 
 						<p>Erlang doesn't have the functional programming machinery of Haskell or Scala...</p>
 
-						<p>...but it's certainly not without plenty of features you'd expect in a language that is functional</p>
+						<p>...but it's certainly not without plenty of features you'd expect in a language that is functional...</p>
+
+						<p>...and the sequential sub-set of the language can be considered functional</p>
 
 					</section>
 					
@@ -218,7 +227,7 @@
 							<li>powerful pattern matching, moving conditional logic to the outside</li>
 							<li>strictly/ eagerly evaluated, so no infinite lists etc</li>
 							<li>functions, while declarative and SSA, are impure, side effects can occur in any context, deep in the call stack...</li>
-							<li>...but it could be argued, however, that side-effects occur only through the actor/ process interface (more later)</li>
+							<li>...but it could be argued, however, that side-effects (such as I/O) occur only in the concurrent part of the language (through the actor/ process interface [more later])</li>
 						</ul>
 					</section>
 					<section>
@@ -238,6 +247,7 @@
 
 				<section>
 						<h3>Concise set of basic types</h3>
+						<p>Primitives</p>
 						<ul>
 							<li>Numbers (integers, floats)</li>
 							<li>Atoms (like symbols)</li>
@@ -246,6 +256,14 @@
 							<li>Pids - process identifiers for Erlang processes (more later)</li>
 							<li>Ports</li>
 							<li>Funs - first-class function variables / closures</li>
+						</ul>
+					</section>
+
+				<section>
+						<h3>Concise set of basic types</h3>
+						
+						<p>Compounds</p>
+						<ul>
 							<li>Tuples (like structures)</li>
 							<li>Lists</li>
 							<ul>
@@ -254,9 +272,8 @@
 								<li>abstractions and traversals</li>
 							</ul>
 						</ul>
-					</section>
 
-				
+					</section>
 				
 				<section>
 					<h2>Modules and Functions</h2>
@@ -274,7 +291,7 @@
 				<section>
 					<h3>A simple module</h3>
 
-					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(my_module). <span style="color: #008800; font-style: italic">% module name, must be saved in a file called my_module.erl</span>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(my_module). <span style="color: #008800; font-style: italic">% module name</span>
 <span style="color: #008800; font-style: italic">% module attributes</span>
 -<span style="color: #999999; font-weight: bold">export</span>([add<span style="color: #666666">/2</span>, square<span style="color: #666666">/1</span>, square_add<span style="color: #666666">/2</span>, print_square<span style="color: #666666">/1</span>]). <span style="color: #008800; font-style: italic">% functions (with arity) to be exported</span>
 
@@ -294,12 +311,14 @@
 	<span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span>(<span style="color: #BB4444">&quot;The square of </span><span style="color: #BB6688; font-weight: bold">~p</span><span style="color: #BB4444"> is: </span><span style="color: #BB6688; font-weight: bold">~p</span><span style="color: #BB6622; font-weight: bold">\n</span><span style="color: #BB4444">&quot;</span>, [<span style="color: #B8860B">X</span>, square(<span style="color: #B8860B">X</span>)]).
 </pre></div>
 
+
+
 				</section>
 
 				<section>
 					<h3>Compiling and using my_module</h3>
 
-<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">shell V5.10.3  (abort with ^G)</span>
 <span style="color: #000080; font-weight: bold">1&gt;</span> c(my_module).
 <span style="color: #888888">{ok,my_module}</span>
 <span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">my_module</span>:<span style="color: #00A000">add</span>(<span style="color: #666666">1</span>,<span style="color: #666666">2</span>).
@@ -312,100 +331,23 @@
 <span style="color: #000080; font-weight: bold">5&gt;</span> 
 </pre></div>
 
+
+
+
 <br /><ul><li>Line 1 (<code>c(my_module).</code>) creates <code>my_module.beam</code>, which is the byte-code file for the module that gets executed</li>
 <li> <code>my_module.beam</code> can also be generated by the Erlang compiler on the command-line with <code>$erlc my_module.erl</code></li></ul>  
 
 				</section>
 
 				<section>
-					<h3>Hot module reloading</h3>
-				</section>
-
-				<section>
-					<h3>Macros</h3>
-
-					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(my_macros).
-
--<span style="color: #999999; font-weight: bold">compile</span>(export_all).
-
--<span style="color: #999999; font-weight: bold">define</span>(<span style="color: #880000">PI</span>, <span style="color: #666666">3</span>.<span style="color: #666666">14</span>).
-
--<span style="color: #999999; font-weight: bold">define</span>(<span style="color: #880000">Mul</span>(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>),<span style="color: #B8860B">X</span><span style="color: #666666">*</span><span style="color: #B8860B">Y</span>).
-
-<span style="color: #00A000">circ</span> (<span style="color: #B8860B">D</span>) <span style="color: #666666">-&gt;</span>
-	<span style="color: #666666">?</span><span style="color: #B8860B">Mul</span>(<span style="color: #B8860B">D</span>, <span style="color: #666666">?</span><span style="color: #B8860B">PI</span>).
-</pre></div>
-
-
-					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
-<span style="color: #000080; font-weight: bold">1&gt;</span> c(my_macros).
-<span style="color: #888888">{ok,my_macros}</span>
-<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">my_macros</span>:<span style="color: #00A000">circ</span>(<span style="color: #666666">2</span>). 
-<span style="color: #888888">6.28</span>
-<span style="color: #000080; font-weight: bold">3&gt;</span> 
-</pre></div>
-
-
-				</section>
-
-				<section>
-					<h3>Built-in Macros and conditionals</h3>
-
-					<ul>
-						<li><code>?MODULE</code></li>
-						<li><code>?FILE</code></li>
-						<li><code>?LINE</code></li>
-					</ul>
-
-					<p>&nbsp;</p>
-
-					<ul>
-						<li><code>-ifdef().</code></li>
-						<li><code>-else.</code></li>
-						<li><code>-endif.</code></li>
-					</ul>
-				</section>
-
-				<section>
-					<h3>Pattern Matching - function clauses</h3>
+					<h3>Recursion and Tail-Call Optimisation</h3>
+					<p>Erlang does not have loops, recursion is used instead</p>
+					<p>If a function call (including a recursive call) is the final st
 
 				</section>
 
 
-				<section>
-					<h3>Guards</h3>
 
-				</section>
-
-				<section>
-					<h3>Pattern Guards</h3>
-
-				</section>
-
-				<section>
-					<h3>Case</h3>
-
-				</section>
-
-				<section>
-					<h3>More about types</h3>
-				</section>
-
-				<section>
-					<h3>Type conversion</h3>
-					<p>Erlang is dynamically typed, but also strongly typed, so there is no implicit type conversion</p>
-
-				</section>
-
-				<section>
-					<h3>Type guards</h3>
-
-				</section>
-
-				<section>
-					<h3>Recursion and TCO</h3>
-
-				</section>
 
 				<section>
 					<h3>Higher Order Functions</h3>
@@ -428,63 +370,10 @@
 				</section>
 
 				<section>
-					<h3>Errors and Exceptions</h3>
-
-				</section>
-
-				<section>
-					<h3>compile time errors</h3>
-
-				</section>
-
-				<section>
-					<h3>runtime errors</h3>
-
-				</section>
-
-				<section>
-					<h3>Exceptions: errors, exits, throws</h3>
-
-				</section>
-
-				<section>
-					<h3>Data Structures</h3>
-
-				</section>
-
-				<section>
-					<h3>Records - tuples with an interface</h3>
-
-				</section>
-
-				<section>
-					<h3>KV stores</h3>
-						<ul>
-							<li>small</li>
-								<ul>
-									<li>proplist</li>
-									<li>orddict</li>
-								</ul>
-							<li>large</li>
-								<ul>
-									<li>dict</li>
-									<li>GB trees (general balanced)</li>
-								</ul>
-							<li>sets</li>
-								<ul>
-									<li>ordsets</li>
-									<li>sets</li>
-									<li>gb_sets</li>
-									<li>sofs (set of sets)</li>
-								</ul>
-							<li>digraphs</li>
-							<li>queues</li></ul>
-
-				</section>
-
-				<section>
 					<h2>Concurrency</h2>
-					Built into the language and runtime, not the OS and not a library
+					<p>Built into the language and runtime, not the OS and not a library</p>
+					<p>The concurrency model is asynchronous message passing between light-weight processes</p>
+					<p>Often referred to as the actor model</p>
 
 				</section>
 
@@ -496,6 +385,10 @@
 
 				<section>
 					<h3>Spawning a process</h3>
+
+					<pre><code data-trim>
+Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
+    </code></pre>
 
 				</section>
 
@@ -542,11 +435,6 @@
 
 				</section>
 
-				<section>
-					<h3>Named processes</h3>
-					Pids are transient
-
-				</section>
 
 				<section>
 					<h2>Erlang: the system</h2>
@@ -554,7 +442,7 @@
 				</section>
 
 				<section>
-						<h3>Erlang is also a system</h3> <p>that (among many other things):
+						<h3>Erlang has a runtime system</h3> <p>that (among many other things):
 							<ul>	
 								<li>implements light-weight processes (a.k.a. green-threads, actors)</li>
 								<li>isolates processes from each other</li>
@@ -571,7 +459,11 @@
 					<ul>
 						<li>written in C</li>
 						<li>BEAM - Bogdan's Erlang Abstract Machine (VM)</li>
-						<li>compilation to byte code and interpreted, although native JIT compilers can be used (HiPE)</li>
+						<li>compilation to byte code</li>
+						<ul>
+							<li>interpreted, as it was views that the BEAM interpreter was fast enough</li>
+							<li>more recently, a native JiT compiler has been used (HiPE)</li>
+						</ul>
 					</ul>
 
 				</section>
@@ -579,9 +471,9 @@
 				<section>
 					<h3>Erlang processes and scheduler</h3>
 					<ul>
-						<li>Erlang processes are light-weight processes, ~300 words memory each, created in microseconds</li>
+						<li>Erlang processes are light-weight processes, ~300 words memory overhead each, created in microseconds</li>
 						<li>ERTS manages links and messages between processes</li>
-						<li>ERTS is a single OS process, uses one thread per CPU core for concurrency in SMP systems</li>
+						<li>ERTS is a single OS process, uses one thread per CPU core for concurrency</li>
 						<li>n:m mapping between Erlang processes and OS threads</li>
 						<li>scheduler handles a pool of processes in a run queue</li>
 						<li>processes can be moved between schedulers to load balance</li>
@@ -613,6 +505,10 @@
 						<li>small processes are quick to GC</li>
 					</ul>
 
+				</section>
+
+				<section>
+					<h3>Hot module reloading</h3>
 				</section>
 
 				<section>
