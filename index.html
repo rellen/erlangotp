@@ -370,7 +370,7 @@
 					<h3>Recursion and Tail-Call Optimisation</h3>
 					<p class="fragment">We can re-write factorial to use a tail-call, by introducing an accumulator, a standard FP pattern</p>
 					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(factorial).
-
+<span style="color: #008800; font-style: italic">% pretty much the same example as http://learnyousomeerlang.com/recursion</span>
 -<span style="color: #999999; font-weight: bold">export</span>([fac<span style="color: #666666">/1</span>, tail_fac<span style="color: #666666">/1</span>]).
 
 <span style="color: #00A000">fac</span> (<span style="color: #666666">0</span>) <span style="color: #666666">-&gt;</span> <span style="color: #666666">1</span>;
@@ -382,31 +382,49 @@
 <span style="color: #00A000">tail_fac</span>(<span style="color: #666666">0</span>, <span style="color: #B8860B">Acc</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">Acc</span>;
 <span style="color: #00A000">tail_fac</span>(<span style="color: #B8860B">N</span>, <span style="color: #B8860B">Acc</span>) <span style="color: #AA22FF; font-weight: bold">when</span> <span style="color: #B8860B">N</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">-&gt;</span> tail_fac(<span style="color: #B8860B">N</span><span style="color: #666666">-1</span>, <span style="color: #B8860B">N</span><span style="color: #666666">*</span><span style="color: #B8860B">Acc</span>).
 </pre></div>
+
+
 <ul>
 <li class="fragment">The tail-recursive version protects against excessive stack usage</li>
-<li class="fragment">However, even with TCO, tail recursive implementations are not necessarily faster than their body-recursive counterparts</li>
+<li class="fragment">However, even with TCO, tail-recursive implementations are not necessarily faster than their body-recursive counterparts</li>
 </ul>
 
 				</section>
 
 				<section>
-					<h3>Recursion and Tail-Call Optimisation</h3>
-					<p class="fragment">TCO is essential in cases where there is lots of recursive calls</p>
-					<p class="fragment">However, when running out of memory is </p>
-
-
-				</section>
-
-				<section>
 					<h3>Higher Order Functions</h3>
-					<p>There is a first-class type called <code>fun</code></p>
-					add(X,Y) ->
-								X() + Y().
+					<p>Key functional programming capability - create, pass around and call functions as variables</p>
+
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">Fa</span> <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #666666">1</span> <span style="color: #AA22FF; font-weight: bold">end</span>.
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">Fa</span>(<span style="color: #666666">2</span>).
+<span style="color: #888888">3</span>
+</pre></div>
+
 
 				</section>
 
 				<section>
 					<h3>Closures</h3>
+					<p>Annonymously-created functions remember their calling context</p>
+					<p>This capability can be used to implement closures - functions that are 'customised' by their calling context to be used later</p>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #B8860B">Fb</span> <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">fun</span>(<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #AA22FF; font-weight: bold">fun</span>(<span style="color: #B8860B">Y</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #B8860B">Y</span> <span style="color: #AA22FF; font-weight: bold">end</span> <span style="color: #AA22FF; font-weight: bold">end</span>.
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #B8860B">Fc</span> <span style="color: #666666">=</span> <span style="color: #B8860B">Fb</span>(<span style="color: #666666">5</span>).
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #B8860B">Fc</span>(<span style="color: #666666">2</span>).
+<span style="color: #888888">7</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> <span style="color: #B8860B">Fd</span> <span style="color: #666666">=</span> <span style="color: #B8860B">Fb</span>(<span style="color: #666666">10</span>).
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">7&gt;</span> <span style="color: #B8860B">Fd</span>(<span style="color: #666666">2</span>). 
+<span style="color: #888888">12</span>
+<span style="color: #000080; font-weight: bold">8&gt;</span> <span style="color: #B8860B">Fc</span>(<span style="color: #666666">2</span>).
+<span style="color: #888888">7</span>
+<span style="color: #000080; font-weight: bold">9&gt;</span> 
+</pre></div>
+
+
 
 				</section>
 
@@ -414,6 +432,20 @@
 					<h3>List HoFs</h3>
 					<code>lists</code> module
 					<p><code>filter, map, foldl, foldr, foreach</code></p>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .1em;padding:.2em .2em;"><pre style="width: 99%;margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">filter</span>(<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">3</span> <span style="color: #AA22FF; font-weight: bold">end</span>,[<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).
+<span style="color: #888888">[4,5,6]</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">map</span>(<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">*</span> <span style="color: #B8860B">X</span> <span style="color: #AA22FF; font-weight: bold">end</span>,[<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).   
+<span style="color: #888888">[1,4,9,16,25,36]</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">foldr</span>(<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Z</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">*</span> <span style="color: #B8860B">Z</span> <span style="color: #AA22FF; font-weight: bold">end</span>, <span style="color: #666666">1</span>, [<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).
+<span style="color: #888888">720</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #B8860B">SumList</span> <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">List</span>) <span style="color: #666666">-&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">foldr</span> (<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>, <span style="color: #B8860B">Z</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #B8860B">Z</span> <span style="color: #AA22FF; font-weight: bold">end</span>, <span style="color: #666666">0</span>, <span style="color: #B8860B">List</span>) <span style="color: #AA22FF; font-weight: bold">end</span>.
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #B8860B">SumList</span>([<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).
+<span style="color: #888888">21</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> 
+</pre></div>
+
 
 				</section>
 

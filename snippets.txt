@@ -141,10 +141,10 @@ Eshell V5.10.3  (abort with ^G)
 
 
 receive
-	Pattern1 -> Expression1;
-	Pattern2 -> Expression2;
-	...
-	PatternN -> ExpressionN
+    Pattern1 -> Expression1;
+    Pattern2 -> Expression2;
+    ...
+    PatternN -> ExpressionN
 end. 	
 
 
@@ -154,8 +154,29 @@ loop(State) ->
         Pattern -> 
             NewState = some_code (State),
             loop (NewState).
-	end. 
+    end. 
 
+
+
+
+Eshell V5.10.3  (abort with ^G)
+1> Fa = fun (X) -> X + 1 end.
+#Fun<erl_eval.6.80484245>
+2> Fa(2).
+3
+3> Fb = fun(X) -> fun(Y) -> X + Y end end.
+#Fun<erl_eval.6.80484245>
+4> Fc = Fb(5).
+#Fun<erl_eval.6.80484245>
+5> Fc(2).
+7
+6> Fd = Fb(10).
+#Fun<erl_eval.6.80484245>
+7> Fd(2). 
+12
+8> Fc(2).
+7
+9> 
 
 
 
