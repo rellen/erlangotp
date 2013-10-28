@@ -340,14 +340,62 @@
 				</section>
 
 				<section>
-					<h3>Recursion and Tail-Call Optimisation</h3>
-					<p>Erlang does not have loops, recursion is used instead</p>
-					<p>If a function call (including a recursive call) is the final st
+					<h3>Recursion</h3>
+					<p class="fragment">Erlang does not have loops, recursion is used instead</p>
+
+<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(factorial).
+
+-<span style="color: #999999; font-weight: bold">export</span>([fac<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">fac</span> (<span style="color: #666666">0</span>) <span style="color: #666666">-&gt;</span> <span style="color: #666666">1</span>;
+<span style="color: #00A000">fac</span> (<span style="color: #B8860B">N</span>) <span style="color: #AA22FF; font-weight: bold">when</span> <span style="color: #B8860B">N</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">N</span> <span style="color: #666666">*</span> fac(<span style="color: #B8860B">N</span><span style="color: #666666">-1</span>).
+</pre></div>
+
 
 				</section>
 
+				
+				<section>
+					<h3>Recursion and Tail-Call Optimisation</h3>
+					<ul>
+						<li class="fragment">In many languages, Erlang included, recursion is fraught with danger, as each recursive call consumes stack</p>
+						<li class="fragment">In many languages, Erlang included, an optimisation that can avoid this problem called Tail Call Optimisation (TCO), is included in the compiler</p>
+						<li class="fragment">If a recursive call is the final call in a function (a tail call), no stack is consumed</p>
+						<li class="fragment">The old stack frame is effectively replaced with the frame of the recursive call</p>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Recursion and Tail-Call Optimisation</h3>
+					<p class="fragment">We can re-write factorial to use a tail-call, by introducing an accumulator, a standard FP pattern</p>
+					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(factorial).
+
+-<span style="color: #999999; font-weight: bold">export</span>([fac<span style="color: #666666">/1</span>, tail_fac<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">fac</span> (<span style="color: #666666">0</span>) <span style="color: #666666">-&gt;</span> <span style="color: #666666">1</span>;
+<span style="color: #00A000">fac</span> (<span style="color: #B8860B">N</span>) <span style="color: #AA22FF; font-weight: bold">when</span> <span style="color: #B8860B">N</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">N</span> <span style="color: #666666">*</span> fac(<span style="color: #B8860B">N</span><span style="color: #666666">-1</span>).
+
+<span style="color: #00A000">tail_fac</span>(<span style="color: #B8860B">N</span>) <span style="color: #666666">-&gt;</span> tail_fac(<span style="color: #B8860B">N</span>, <span style="color: #666666">1</span>).
+
+<span style="color: #00A000">tail_fac</span>(<span style="color: #666666">0</span>, <span style="color: #B8860B">Acc</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">Acc</span>;
+<span style="color: #00A000">tail_fac</span>(<span style="color: #B8860B">N</span>, <span style="color: #B8860B">Acc</span>) <span style="color: #AA22FF; font-weight: bold">when</span> <span style="color: #B8860B">N</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">-&gt;</span> tail_fac(<span style="color: #B8860B">N</span><span style="color: #666666">-1</span>, <span style="color: #B8860B">N</span><span style="color: #666666">*</span><span style="color: #B8860B">Acc</span>).
+</pre></div>
+<ul>
+<li class="fragment">The tail-recursive version protects against excessive stack usage</li>
+<li class="fragment">However, even with TCO, tail recursive implementations are not necessarily faster than their body-recursive counterparts</li>
+</ul>
+
+				</section>
+
+				<section>
+					<h3>Recursion and Tail-Call Optimisation</h3>
+					<p class="fragment">TCO is essential in cases where there is lots of recursive calls</p>
+					<p class="fragment">However, when running out of memory is </p>
 
 
+				</section>
 
 				<section>
 					<h3>Higher Order Functions</h3>
@@ -365,7 +413,7 @@
 				<section>
 					<h3>List HoFs</h3>
 					<code>lists</code> module
-					<p> filter, map, foldl, foldr, foreach </p>
+					<p><code>filter, map, foldl, foldr, foreach</code></p>
 
 				</section>
 
@@ -433,7 +481,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 				<section>
 
 					<h3>Concurrency Example - a simple counter</h3>
-					<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: left;background: #f8f8f8; overflow:auto;width:40%;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counter).
+					<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: left;background: #f8f8f8; overflow:auto;width:46%;border:solid gray;border-width:.1em .1em .1em .1em;padding:.2em .2em;"><pre style="width: 100%;margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counter).
 
 -<span style="color: #999999; font-weight: bold">export</span>([create<span style="color: #666666">/0</span>, start<span style="color: #666666">/0</span>, delete<span style="color: #666666">/1</span>, increment<span style="color: #666666">/1</span>, count<span style="color: #666666">/1</span>, reset<span style="color: #666666">/1</span>]).
 
@@ -463,7 +511,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
     ok.
 </pre></div>
 
-<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: right;background: #f8f8f8; overflow:auto;width:40%;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #00A000">loop</span>(<span style="color: #B8860B">Count</span>) <span style="color: #666666">-&gt;</span>
+<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: right;background: #f8f8f8; overflow:auto;width:50%;border:solid gray;border-width:.1em .1em .1em .1em;padding:.2em .2em;"><pre style="width: 100%;margin: 0; line-height: 125%"><span style="color: #00A000">loop</span>(<span style="color: #B8860B">Count</span>) <span style="color: #666666">-&gt;</span>
     <span style="color: #AA22FF; font-weight: bold">receive</span>
         delete <span style="color: #666666">-&gt;</span>
             ok;
@@ -471,12 +519,12 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
             loop (<span style="color: #B8860B">Count</span><span style="color: #666666">+1</span>);
         {count, <span style="color: #B8860B">Pid</span>} <span style="color: #666666">-&gt;</span>
             <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> {self(),{count, <span style="color: #B8860B">Count</span>}},
-            loop(<span style="color: #B8860B">Count</span>);
+            loop (<span style="color: #B8860B">Count</span>);
         reset <span style="color: #666666">-&gt;</span>
-            loop(<span style="color: #666666">0</span>);
+            loop (<span style="color: #666666">0</span>);
         <span style="color: #B8860B">Unexpected</span> <span style="color: #666666">-&gt;</span>
-            <span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span>(<span style="color: #BB4444">&quot;Received an unexpected message: </span><span style="color: #BB6688; font-weight: bold">~p~n</span><span style="color: #BB4444">&quot;</span>, [<span style="color: #B8860B">Unexpected</span>]),
-            loop(<span style="color: #B8860B">Count</span>)
+            <span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span> (<span style="color: #BB4444">&quot;Unexpected message: </span><span style="color: #BB6688; font-weight: bold">~p~n</span><span style="color: #BB4444">&quot;</span>, [<span style="color: #B8860B">Unexpected</span>]),
+            loop (<span style="color: #B8860B">Count</span>)
     <span style="color: #AA22FF; font-weight: bold">end</span>.
 </pre></div>
 
