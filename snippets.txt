@@ -140,4 +140,22 @@ Eshell V5.10.3  (abort with ^G)
 
 
 
+receive
+	Pattern1 -> Expression1;
+	Pattern2 -> Expression2;
+	...
+	PatternN -> ExpressionN
+end. 	
+
+
+
+loop(State) ->
+    receive
+        Pattern -> 
+            NewState = some_code (State),
+            loop (NewState).
+	end. 
+
+
+
 

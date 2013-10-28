@@ -386,34 +386,102 @@
 				<section>
 					<h3>Spawning a process</h3>
 
-					<pre><code data-trim>
+					<p class="fragment"><code>
 Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
-    </code></pre>
+    </code></p>
+    <p class="fragment"><code>Pid</code> is the process identifier of the newly spawned process</p>
 
 				</section>
 
 				<section>
 					<h3>Sending a message</h3>
 
+					<p class="fragment"><code>Pid ! Message.</code></p>
+    				<p class="fragment"><code>Message</code> can be any Erlang term</p>
+
 				</section>
 
 				<section>
 					<h3>Receiving a message</h3>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">receive</span>
+    <span style="color: #B8860B">Pattern1</span> <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">Expression1</span>;
+    <span style="color: #B8860B">Pattern2</span> <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">Expression2</span>;
+    ...
+    <span style="color: #B8860B">PatternN</span> <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">ExpressionN</span>
+<span style="color: #AA22FF; font-weight: bold">end</span>. 
+</pre></div>
+
 
 				</section>
 
 				<section>
 					<h3>Maintaining state</h3>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #00A000">loop</span>(<span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">receive</span>
+        <span style="color: #B8860B">Pattern</span> <span style="color: #666666">-&gt;</span> 
+            <span style="color: #B8860B">NewState</span> <span style="color: #666666">=</span> some_code (<span style="color: #B8860B">State</span>),
+            loop (<span style="color: #B8860B">NewState</span>).
+    <span style="color: #AA22FF; font-weight: bold">end</span>. 
+</pre></div>
+
+
+
+
 
 				</section>
 
 				<section>
-					<h3>Delays</h3>
 
-				</section>
+					<h3>Concurrency Example - a simple counter</h3>
+					<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: left;background: #f8f8f8; overflow:auto;width:40%;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counter).
 
-				<section>
-					<h3>Selective receive</h3>
+-<span style="color: #999999; font-weight: bold">export</span>([create<span style="color: #666666">/0</span>, start<span style="color: #666666">/0</span>, delete<span style="color: #666666">/1</span>, increment<span style="color: #666666">/1</span>, count<span style="color: #666666">/1</span>, reset<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">create</span> () <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF">spawn</span>(<span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>, start, []).
+
+<span style="color: #00A000">start</span> () <span style="color: #666666">-&gt;</span> loop(<span style="color: #666666">0</span>).
+
+<span style="color: #00A000">delete</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> delete,
+    ok.
+
+<span style="color: #00A000">increment</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> increment,
+    ok.
+
+<span style="color: #00A000">count</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> {count, self()},
+    <span style="color: #AA22FF; font-weight: bold">receive</span>
+        {<span style="color: #B8860B">Pid</span>,{count, <span style="color: #B8860B">Count</span>}} <span style="color: #666666">-&gt;</span>
+            <span style="color: #B8860B">Count</span>;
+        _ <span style="color: #666666">-&gt;</span> error
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+
+<span style="color: #00A000">reset</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> reset,
+    ok.
+</pre></div>
+
+<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: right;background: #f8f8f8; overflow:auto;width:40%;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #00A000">loop</span>(<span style="color: #B8860B">Count</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">receive</span>
+        delete <span style="color: #666666">-&gt;</span>
+            ok;
+        increment <span style="color: #666666">-&gt;</span>
+            loop (<span style="color: #B8860B">Count</span><span style="color: #666666">+1</span>);
+        {count, <span style="color: #B8860B">Pid</span>} <span style="color: #666666">-&gt;</span>
+            <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> {self(),{count, <span style="color: #B8860B">Count</span>}},
+            loop(<span style="color: #B8860B">Count</span>);
+        reset <span style="color: #666666">-&gt;</span>
+            loop(<span style="color: #666666">0</span>);
+        <span style="color: #B8860B">Unexpected</span> <span style="color: #666666">-&gt;</span>
+            <span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span>(<span style="color: #BB4444">&quot;Received an unexpected message: </span><span style="color: #BB6688; font-weight: bold">~p~n</span><span style="color: #BB4444">&quot;</span>, [<span style="color: #B8860B">Unexpected</span>]),
+            loop(<span style="color: #B8860B">Count</span>)
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+</pre></div>
+
+
+
 
 				</section>
 
