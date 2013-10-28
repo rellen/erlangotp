@@ -87,9 +87,8 @@
 							<li>A quick history lesson</li>
 							<li>basics of the language</li>
 							<li>the runtime system</li>
-							<li>more advanced features</li>
 							<li>The OTP libraries</li>
-							<li>Uses: What, where and how</li>
+							<li>Users and uses</li>
 							<li>Next steps</li>
 
 						</ul>
@@ -251,6 +250,18 @@
 						<p class="fragment">For example, it is not as helpful with things such as automatic loop/fold simplification</p>
 					
 					</section>
+
+					<section>
+					<h3>Developer Tools</h3>
+					<ul>
+						<li>Process manager</li>
+						<li>dbg tracers</li>
+						<li>eunit</li>
+						<li>build tools - rebar</li>
+						<li>Dialyzer - static code analysis and type checking</li>
+					</ul>
+
+				</section>
 
 				</section>
 
@@ -482,6 +493,7 @@
 							<li class="fragment">Encapsulation</li>
 							<li class="fragment">Message passing</li>
 						</ul>
+						<li class="fragment">Most of the well-known attributes of Erlang are based on it's concurrency implementation</li>
 					</ul>
 
 				</section>
@@ -590,20 +602,20 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 				</section>
 
 				<section>
-					<h3>links</h3>
-					link
-					spawn_link
+					<h3>Process links</h3>
+					<ul>
+						<li>Links can be made between processes</li>
+						<li>If a process dies, all processes linked to it are notified, and by default die too</li>
+						<li><code>link(Pid)</code> or <code>Pid = spawn_link(M,F,[A])</code></li>
+						<li>A process can be made a 'system process' meaning it won't die if a linked process dies</p>
+					</ul> 
 
 				</section>
 
-				<section>
-					<h3>system processes</h3>
-					trap exit signals and convert to messages
-
-				</section>
 
 				<section>
 					<h3>Monitors</h3>
+					<p>Are more flexible and expressive and less drastic than links </p> 
 
 				</section>
 
@@ -616,12 +628,11 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 				<section>
 						<h3>Erlang has a runtime system</h3> <p>that (among many other things):
 							<ul>	
-								<li>implements light-weight processes (a.k.a. green-threads, actors)</li>
-								<li>isolates processes from each other</li>
-								<li>efficiently utilises multi-core systems to achieve parallelism on top of concurrency</li>
-								<li>can scale from multi-core to distributed with very little (if any) code change
-								<li>allows new/ improved code to be hot-loaded</li>
-								<li>has multiple facilities to integrate with other languages, esp C/Java/.NET</li>
+								<li class="fragment">implements light-weight processes and message passing</li>
+								<li class="fragment">efficiently utilises multi-core systems to achieve parallelism on top of concurrency</li>
+								<li class="fragment">can scale from multi-core to distributed with very little (if any) code change
+								<li class="fragment">allows new/ improved code to be hot-loaded</li>
+								<li class="fragment">has multiple facilities to integrate with other languages, esp C/C++</li>
 							</ul>
 						</p>  
 					</section>
@@ -629,152 +640,270 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 				<section>
 					<h3>ERTS - Erlang Runtime System</h3>
 					<ul>
-						<li>written in C</li>
-						<li>BEAM - Bogdan's Erlang Abstract Machine (VM)</li>
-						<li>compilation to byte code</li>
+						<li class="fragment">written in C</li>
+						<li class="fragment">BEAM - Bogdan's Erlang Abstract Machine (VM)</li>
+						<li class="fragment">compilation to byte code</li>
 						<ul>
-							<li>interpreted, as it was views that the BEAM interpreter was fast enough</li>
-							<li>more recently, a native JiT compiler has been used (HiPE)</li>
+							<li class="fragment">interpreted, as it was views that the BEAM interpreter was fast enough</li>
+							<li class="fragment">more recently, a native JiT compiler has been used (HiPE)</li>
+						</ul>
+						<li class="fragment">From now on in this talk, VM and ERTS are synonymous</li> 
+					</ul>
+
+				</section>
+
+				<section>
+					<h3>Erlang Processes</h3>
+					<ul>
+						<li>Erlang processes are light-weight processes, ~300 words memory overhead each, created in microseconds</li>
+						<li class="fragment">VM manages message passing between processes...</li>
+						<li class="fragment">...by copying the message (in memory) from process to process in a lock-free manner</li>
+						<li class="fragment">Not all light-weight process or actor libraries are the same...</li>
+						<li class="fragment">unlike, say Akka, Erlang processes are isolated from each other and won't crash the whole VM</li> 
+					</ul>
+
+				</section>
+
+				<section>
+					<h3>Concurrency and Parallelism</h3>
+					<ul>
+						<li>VM is a single OS process</li>
+						<li class="fragment">before the days of multi-core CPUs and Symmetrical Multi-Processing (SMP)</li>
+							<ul>
+								<li class="fragment">processes ran concurrently, but not in parallel</li>
+								<li class="fragment">more VM instances on remote machines was the only way to be parallel</li>
+							</ul>
+						<li class="fragment">since multi-core and SMP</li>
+							<ul>
+								<li class="fragment">VM is multi-threaded and can execute processes in parallel</li>
+								<li class="fragment">VM has one thread per CPU core for processes, plus other system threads</li>
+								<li class="fragment">did not require a change in the language, only in the VM</li>
+							</ul>
+						</li>
+					</ul>
+
+
+				</section>
+
+				<section>
+					<h3>Processes schedulers</h3>
+					<ul>
+						<li>each thread in the VM for running processes has a scheduler</li>
+						<li class="fragment">the scheduler handles scheduling a pool of processes in a run queue</li>
+						<li class="fragment">n:m mapping between Erlang processes and OS threads</li>
+						<li class="fragment">processes can be moved between threads to load balance</li>
+					</ul>
+
+				</section>
+
+				
+				<section>
+					<h3>Memory Management</h3>
+					<p>The VM manages memory automatically and is garbage-collected (generational copying garbage collector)</p>
+					<ul>
+						<li class="fragment">two alternating duty heaps, only active memory is copied from one to the other when they switch</li>
+						<li class="fragment">two generations of the heap are maintained, current and old</li>
+						<li class="fragment">the current generation is considered to be more likely to be transient memory</li>
+						<li class="fragment">two garbage collector sweeps are executed on different conditions</li>
+						<ul>
+							<li class="fragment">shallow GC: as needed, only looks at the current generation, after three GCs current will become old</li>
+							<li class="fragment">deep GC: checks old as well, only triggered when shallow does not recycle enough memory</li>
 						</ul>
 					</ul>
 
 				</section>
 
 				<section>
-					<h3>Erlang processes and scheduler</h3>
+					<h3>Memory Management cont'd</h3>
 					<ul>
-						<li>Erlang processes are light-weight processes, ~300 words memory overhead each, created in microseconds</li>
-						<li>ERTS manages links and messages between processes</li>
-						<li>ERTS is a single OS process, uses one thread per CPU core for concurrency</li>
-						<li>n:m mapping between Erlang processes and OS threads</li>
-						<li>scheduler handles a pool of processes in a run queue</li>
-						<li>processes can be moved between schedulers to load balance</li>
-					</ul>
-
-				</section>
-
-				<section>
-					<h3>I/O</h3>
-						non-blocking event-based IO
-
-				</section>
-
-				<section>
-					<h3>Memory Management</h3>
-					<ul>
-						<li>Erlang/ERTS manages memory automatically</li>
-						<li>generational copying garbage collector</li>
-							<ul>
-								<li>two alternating heaps (to-space and from-space), only active memory is copied to to-space heap, from-space is wiped</li>
-								<li>two generations of the heap</li>
-								<ul>
-									<li>shallow GC only looks at the current generation, after three GCs current will become old</li>
-									<li>deep GC checks old as well, only triggered when shallow does not recycle enough memory</li>
-								</ul>
-							</ul>
 						<li>process isolation means individual processes can be stopped for GC without others being affected</li>
-						<li>short lived processes may never be GC'd (just deallocated)</li>
-						<li>small processes are quick to GC</li>
+						<li class="fragment">short lived processes may never be GC'd (just deallocated)</li>
+						<li class="fragment">small processes are quick to GC</li>
 					</ul>
 
 				</section>
 
 				<section>
 					<h3>Hot module reloading</h3>
-				</section>
-
-				<section>
-					<h2>Erlang: more advanced features</h2>
-
-				</section>
-
-				<section>
-					<h3>Distributed Erlang</h3>
 					<ul>
-						<li>Erlang nodes - ERTS instance</li>
-						<li>clusters of nodes with location service</li>
-						<li>Pids are location transparent</li>
-						<li>RPC and remote spawning have similar interface to local</li>
+						<li>The VM can detect when a .beam file has changed and load it into the system</li>
+						<li class="fragment">Only two versions of the code can be maintained in the system (old and new)</li>
+						<li class="fragment">The old version of the module still exists and is used by an processes making local calls to its functions</li>
+						<li class="fragment">An external call to the module (<code>module:function(Arguments)</code>) will use the new version</li>
+						<li class="fragment">This is the extent of the basic hot code loading capability in Erlang</li>
 					</ul>
 
 				</section>
 
+
 				<section>
-					<h3>ETS and DETS</h3>
-					Erlang Term Storage, KV store with process interface
+					<h3>Distributed Erlang</h3>
+					<ul>
+						<li>Each ERTS instance is called a node</li>
+						<li class="fragment">clusters of nodes can be created and include location services etc</li>
+						<li class="fragment">remotely spawning a process has a similar interface to locally</li>
+							<ul>
+								<li class="fragment"><code>Pid = spawn(Node, Module, Function, [Arguments]).</code></li>
+								<li class="fragment">Pids are location transparent</li>
+							</ul>
+					</ul>
+
+				</section>
+
+
+				<section>
+					<h3>Interfacing with native code - C/C++</h3>
+					<ul>
+						<li class="fragment">NIFs: Natively Implemented Functions</li>
+							<ul>
+								<li class="fragment">allows a C/C++ object file with a set of functions to be loaded into a running VM</li>
+								<li class="fragment">native functions are called as if they were Erlang functions</li>
+								<li class="fragment">if the native code fails, the VM will crash</li>
+							</ul>
+						<li class="fragment">Port Programs</li>
+							<ul>
+								<li class="fragment">allows a C/C++ program to interface with the VM through stdin/out</li>
+								<li class="fragment">appears to be a normal Erlang process to Erlang code</li>
+								<li class="fragment">completely isolated at the OS process level</li>
+							</ul>
+						<li class="fragment">Linked In Port Drivers</li>
+							<ul>
+								<li class="fragment">allows a C/C++ object file with a set of functions to be loaded into a running VM</li>
+								<li class="fragment">appears to be a normal Erlang process to Erlang code</li>
+								<li class="fragment">if the native code fails, the VM will crash</li>
+							</ul>
+					
+					</ul>
 
 				</section>
 
 				<section>
 					<h3>Interfacing with other languages</h3>
 					<ul>
-						<li>C/C++ - NIFs, Port Programs, Linked In Port Drivers</li>
-						<li>Java</li>
-						<li>.Net</li>
-						<li>other</li>
+						<li class="fragment">Java - jInterface</li>
+						<li class="fragment">OTP.NET</li>
+						<li class="fragment">Py-Interface</li>
+						<li class="fragment">Perl Erlang Port</li>
+						<li class="fragment">PHP/Erlang</li>
+						<li class="fragment">Haskell/Erlang FFI</li>
+						<li class="fragment">...</li>
 					</ul>
-
 				</section>
 
+
 				<section>
-					<h3>Developer Tools</h3>
+					<h3>Performance and reliability</h3>
 					<ul>
-						<li>Process manager</li>
-						<li>dbg tracers</li>
-						<li>eunit</li>
-						<li>build tools - rebar</li>
-						<li>dialyzer</li>
+						<li class="fragment">The VM is designed for (soft) real-time performance...</li>
+							<ul>
+								<li class="fragment">...but not necessarily raw speed</li>
+								<li class="fragment">NIFs or Ports may be needed for speed-critical code</li>
+							</ul>
+						<li class="fragment">The VM is designed for reliability...</li>
+							<ul>
+								<li class="fragment">...but it is not 100% bullet-proof</li>
+								<li class="fragment">buggy NIFs or Linked-In ports can crash the VM</li>
+								<li class="fragment">buggy receive blocks can leave messages on the queue and leak memory</li>
+								<li class="fragment">body-recursive function calls can blow the stack</li>
+
+							</ul>
 					</ul>
 
 				</section>
 
-				<section>
-
-
-				</section>
-
 
 
 				<section>
-					<h2>The OTP Libraries</h2>
+					<h2>The Open Telecom Platform (OTP) Libraries</h2>
 					<p>
 						
 					</p>
 				</section>
 
 				<section>
-						<h3>The OTP libraries</h3> <p>are a set of well-tested libraries (and design principles) that actually allow the Erlang platform to do what it says it can do on the box:
+						<h3>The OTP libraries</h3> <p class="fragment">are a set of well-tested libraries (and design principles) that actually allow the Erlang platform to do what it says it can do on the box:
 						<ul>
-							<li>fault-tolerance</li>
-							<li>high availability and up-time</li>
-							<li>granular management of highly-concurrent systems</li>
-							<li>live patching of systems in production!</li>
-							<li>web-scale!</li>
+							<li class="fragment">fault-tolerance</li>
+							<li class="fragment">high availability and up-time</li>
+							<li class="fragment">granular management of highly-concurrent systems</li>
+							<li class="fragment">live patching of systems in production!</li>
+							<li class="fragment">web-scale!</li>
 						</ul>
 						</p>
 						<p>&nbsp;</p>
-						<p>OTP is the <del>recommended</del> <b>only sane</b> way to develop non-trivial Erlang-based production software</p>
+						<p class="fragment">OTP is the <del>recommended</del> <b>only sane</b> way to develop non-trivial Erlang-based production software</p>
+						<p class="fragment">Despite its name, OTP is not domain-specific to Telecom applications</p>
 
 					</section>
 
-					<section>Why</section>
+					<section>
+						<h3>Why use OTP?</h3>
+						<ul>
+							<li>Writing robust concurrent code by hand with spawns, !, receive, links and monitors for each service is cumbersome and error prone</li>
+							<li class="fragment">A simple synchronous call to a process to do some work and return a result could be a dozen lines of code to make fault-tolerant</li>
+							<li class="fragment">The OTP libraries provide a framework to do concurrency robustly, in a well-thought out and well-tested way</li>
+							<li class="fragment">The programmer is forced to think about process interaction and reliability</li>
+						</ul>
 
+					</section>
 
 					<section>
-						<h3>gen_server</h3>
-						<ul><li>API</li>
-						<li>Behavior interface (callback functions)</li>
-						<li>internal</li></li></section>
+						<h3>OTP process modules</h3>
+						<p>To build an OTP application, several process modules need to be written</p>
+						<ul>
+							<li class="fragment">Supervisor - process that supervises other processes</li>
+							<li class="fragment">Worker - process that implements application functionality</li>
+							<li class="fragment">These modules must conform to behaviours, which are like contracts or interfaces, promising certain callback functions have been implemented</li>
+						</ul>
 
+					</section>
 					
 
 					<section><h3>OTP supervisors</h3>
-						<ul><li>supervision tree (gen_servers etc at the leaf nodes)</li>
-						<li>fault tolerance</li></ul>
+						<ul>
+							<li>OTP supervisors are the core component of OTP's fault tolerance capabilities</li>
+							<li class="fragment">supervisors are processes that monitor the state of a set of other processes, and take action if they crash</li>
+							<ul>
+								<li class="fragment">let the process crash and do nothing</li>
+								<li class="fragment">restart the process that crashed</li>
+								<li class="fragment">restart the process that crashed as well as some other related processes</li>
+							</ul>
+							<li class="fragment">processes under supervision can be workers (processes that implement functionality) or other supervisors</li>
+							<li class="fragment">the supervision relationship then forms a tree, with workers at the leaf nodes</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Worker processes - gen_servers</h3>
+						<ul>
+							<li>gen_server is one kind of worker behaviour - for processes that will receive messages and do work</li>
+							<li class="fragment">there are callbacks for messages that can be synchronous or asynchronous</li>
+							<li class="fragment">initialisation, termination and code upgrade callbacks are also included</li>
+							<li class="fragment">the call chain from a client process to a gen_server process and back is a little confusing at first</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>gen_servers - creating</h3>
+						<ul>
+							<li class="fragment">through an API or at startup, a request is made to a supervisor to spawn a gen_server instance</li>
+							<li class="fragment">the request goes via the OTP system back to the gen_server module and calls the init callback</li>
+							<li class="fragment">the spawned gen_server process is linked to the supervisor</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>gen_servers - accessing functionality</h3>
+						<ul>
+							<li class="fragment">through the developer's gen_server instance API, client calls (synchronous) or casts (asynchrous) are made</li>
+							<li class="fragment">the calls and casts go from the client process via the OTP system, which finds the correct gen_server process and calls the appropriate callback</li>
+							<li class="fragment">the response to the call or cast (if any) goes back via OTP to the client process</li>
+						</ul>
 					</section>
 
 					<section>
 						<h3>OTP applications</h3>
+						<P>are a set of supervisors, workers and supporting modules that make up a self-contained OTP application
 						<ul>
 							<li class="fragment">specify a code directory structure</li>
 							<li class="fragment">specify the supervisors and other modules of the application</li>
@@ -783,10 +912,10 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 					</section>
 
 					<section>
-						<h3>Upgrading the counter service to use OTP</h3>
+						<h3>Example - Upgrading the counter service to use OTP</h3>
 						<ul>
 							<li class="fragment">implement an OTP application and OTP supervisor for fault-tolerance</li>
-							<li class="fragment">a counter process becomes an OTP gen_server to avoid the manual message handling pitfalls</li>
+							<li class="fragment">a counter process becomes an OTP gen_server to avoid the manual fault-tolerance pitfalls</li>
 							<li class="fragment">abstract away from direct Pid references to counter processes</li>
 						</ul>
 					</section>
@@ -1171,15 +1300,87 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 					</ul>
 			</section>
 
+			<section>
+					<h2>Selected Users and Uses</h2>
+				
+				</section>
+
+				<section>
+					<h3>Some Erlang Users</h3>
+					<ul>
+						<li>Telecom</li>
+							<ul>
+								<li>Ericsson</li>
+								<li>Nortel</li>
+								<li>T-Mobile</li>
+								<li>Motorola</li>
+							</ul>
+						<li>Trading/ Betting</li>
+							<ul>
+								<li>Goldman Sachs</li>
+								<li>Smarkets</li>
+							</ul>
+						<li>Gaming</li>
+							<ul>
+								<li>Vendetta Online</li>
+								<li>Battlestar Galactica</li>
+								<li>Call of Duty</li>
+							</ul>	
+
+						<li>Chat / Social Media</li>
+							<ul>
+								<li>Facebook (formerly)</li>
+								<li>Yahoo</li>
+								<li>WhatsApp</li>
+							</ul>
+					</ul>
+
+
+				</section>
 
 
 				<section>
-					<h2>Uses outside Ericsson</h2>
-					<p>
+					<h3>Some Erlang Projects</h3>
+					<ul>
+						<li>Web</li>
+							<ul>
+								<li>Yaws - web server</li>
+								<li>Mochiweb - web server</li>
+								<li>Webmachine - web framework</li>
+								<li>Cowboy - web server</li>
+								<li>Chicago Boss - Rails-like web framework</li>
+								<li>Zotonic - CMS</li>
+							</ul>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Some Erlang Projects</h3>
+					<ul>
+	
+						<li>Database</li>
+							<ul>
+								<li>CouchDB and derivatives (some moving mostly to C/C++) - document database</li>
+								<li>Riak - distributed K-V store</li>
+								<li>SimpleDB - distributed DB in AWS</li>
+							</ul>
+						<li>Configuration management - Chef v.11</li>
+						<li>Queuing - RabbitMQ</li>
+
+					</ul>
+				</section>
+
+				<section>
+					<h3>Some Erlang Projects</h3>
+					<ul>
 						
-					</p>
+						<li>Languages</li>
+							<ul>
+								<li>Elixir - <a href="http://elixir-lang.org/">http://elixir-lang.org/</a> - Ruby/ Clojure-influenced language built on the Erlang VM</li>
+								
+							</ul>
 
-
+					</ul>
 				</section>
 
 				<section>
@@ -1201,6 +1402,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 								<li class="fragment">...Node JS project scales but is a mess of tangled slinkies... *</li>
 								<li class="fragment">...Akka project is elegant but keeps crashing your JVM...</li>
 								<li class="fragment">...C/C++ library is wicked-fast but needs orchestration, scaling and a nice interface...</li>
+								<li class="fragment">...organisation's latest killer service/ web app needs to be robust and scalable...</li>
 							</ul>
 							<li class="fragment">...then Erlang and OTP may be for you</li>
 						</ul>
@@ -1243,7 +1445,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 						<ul>
 							<li>Talks and Slides</li>
 								<ul>
-									<li><a href="http://www.youtube.com/watch?v=G0eBDWigORY">Bernard Buggan's What I wish I'd known when I started</a></li>
+									<li><a href="http://www.youtube.com/watch?v=G0eBDWigORY">Bernard Duggan's What I wish I'd known when I started</a></li>
 									<li><a href="http://lanyrd.com/topics/erlang/coverage/?q=erlang">Lanyrd Erlang query </a></li>
 								</ul>
 
@@ -1258,6 +1460,21 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 
 
 				</section>
+
+				<section>
+					<h3>Thanks</h3>
+					<ul>
+						<li>to OJ and Darren Mackay for getting me interested in Erlang</li>
+						<li>to Ben, Katie and Matt for help and feedback</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Questions</h3>
+					
+				</section>
+
+
 
 				
 
