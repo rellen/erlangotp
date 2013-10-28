@@ -179,4 +179,79 @@ Eshell V5.10.3  (abort with ^G)
 9> 
 
 
+Eshell V5.10.3  (abort with ^G)
+1> lists:filter(fun (X) -> X > 3 end,[1,2,3,4,5,6]).
+[4,5,6]
+2> lists:map(fun (X) -> X * X end,[1,2,3,4,5,6]).   
+[1,4,9,16,25,36]
+3> lists:foldr(fun (X,Z) -> X * Z end, 1, [1,2,3,4,5,6]).
+720
+4> SumList = fun (List) -> lists:foldr (fun (X, Z) -> X + Z end, 0, List) end.
+#Fun<erl_eval.6.80484245>
+5> SumList([1,2,3,4,5,6]).
+21
+6> 
+
+
+
+
+Eshell V5.10.3  (abort with ^G)
+1> counters_sup:start_test().
+true
+2> counters:create(c1).
+init on a counter called: c1
+{ok,<0.38.0>}
+3> counters:count(c1).          
+{ok,0}
+4> counters:increment(c1,5).    
+ok
+5> counters:count(c1).      
+{ok,5}
+6> counters:increment(c1,crash).
+
+=ERROR REPORT==== 29-Oct-2013::01:03:03 ===
+** Generic server <0.38.0> terminating 
+** Last message in was {'$gen_cast',{increment,crash}}
+** When Server state == {state,5}
+** Reason for termination == 
+** {badarith,[{counter,handle_cast,2,[{file,"src/counter.erl"},{line,52}]},
+              {gen_server,handle_msg,5,[{file,"gen_server.erl"},{line,604}]},
+              {proc_lib,init_p_do_apply,3,
+                        [{file,"proc_lib.erl"},{line,239}]}]}
+init on a counter called: c1
+ok
+7> counters:count(c1).          
+{ok,0}
+8> 
+
+
+Eshell V5.10.3  (abort with ^G)
+1> counters_sup:start_test().
+true
+2> counters:create(c1).
+init on a counter called: c1
+{ok,<0.36.0>}
+3> counters:increment(c1,5).
+ok
+4> counters:count(c1).
+{ok,5}
+5> counters:increment(c1,crash).
+init on a counter called: c1
+ok
+6> 
+=ERROR REPORT==== 29-Oct-2013::02:17:12 ===
+** Generic server <0.36.0> terminating 
+** Last message in was {'$gen_cast',{increment,crash}}
+** When Server state == {state,c1,5}
+** Reason for termination == 
+** {badarith,[{counter,handle_cast,2,[{file,"src/counter.erl"},{line,59}]},
+              {gen_server,handle_msg,5,[{file,"gen_server.erl"},{line,604}]},
+              {proc_lib,init_p_do_apply,3,
+                        [{file,"proc_lib.erl"},{line,239}]}]}
+
+6> counters:count(c1).          
+{ok,5}
+7> 
+
+
 
