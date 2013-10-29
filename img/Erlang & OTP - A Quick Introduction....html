@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///Users/robert/professional/BPFG/erlangotp/index.html#/60 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+
+		<title>Erlang &amp; OTP - A Quick Introduction...</title>
+
+		<meta name="description" content="A quick introduction to the functional programming language and platfrom Erlang and the OTP libraries">
+		<meta name="author" content="Robert Ellen &lt;rellen@ieee.org&gt;">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="file:///Users/robert/professional/BPFG/erlangotp/css/reveal.min.css">
+		<link rel="stylesheet" href="file:///Users/robert/professional/BPFG/erlangotp/css/theme/beige.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="file:///Users/robert/professional/BPFG/erlangotp/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script><link rel="stylesheet" href="./Erlang & OTP - A Quick Introduction..._files/paper.css" type="text/css" media="print">
+		
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body style="-webkit-transition: -webkit-transform 0.8s ease; transition: -webkit-transform 0.8s ease;">
+
+		<div class="reveal default center" data-transition-speed="default">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides" style="width: 960px; height: 700px; zoom: 0.9025714285714285;">
+
+				<section style="top: -20px; display: none;" class="past">
+					<h1>Erlang and the OTP libraries</h1>
+					<h3>A quick introduction</h3>
+					<p>
+						<small>Robert Ellen</small>
+					</p>
+				</section>
+
+				
+					<section style="top: -20px; display: none;" class="past">
+						<h2>Summary</h2>
+					</section>
+					<section style="top: -20px; display: none;" class="past">
+						Erlang and the Open Telecom Platform (OTP) are a language, system and platform that are well-established but experiencing a resurgence in popularity
+					</section>
+					
+					<section style="top: -20px; display: none;" class="past">
+						<h3>Erlang and the OTP libraries</h3><p> are a 'battle-tested' platform for developing (soft) real-time software with very high performance and reliability</p>
+					</section>
+
+					<section style="top: -20px; display: none;" class="past">
+						While Erlang as a language is simple (and controversial), it is the power and reliability of the Erlang runtime/VM and the OTP libraries that make the Erlang platform a compelling choice for developing robust (soft) real-time software
+					</section>
+
+					
+					
+					
+				
+				<section style="top: -20px; display: none;" class="past">
+						<h2>About me...</h2>
+						<ul>
+							<li>electronics/ software engineer by qualification</li>
+							<li>long-term contractor at Carlton &amp; Unitied Breweries' Yatala brewery</li>
+							<li>engineering and information systems</li>
+							<li>using Erlang (among other tools) for Masters-level research to implement/ demonstrate my ideas</li>
+						</ul>
+
+					</section>
+				<section style="top: -20px; display: none;" class="past stack">
+					<section style="top: -20px;">
+						<h2>Overview</h2>
+						<ul>
+							<li>What is Erlang?</li>
+							<li>A quick history lesson</li>
+							<li>Basics of the language</li>
+							<li>The runtime system</li>
+							<li>The OTP libraries</li>
+							<li>Users and uses</li>
+							<li>Next steps</li>
+
+						</ul>
+					</section>
+					
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+						<h3>What is Erlang?</h3>
+
+						<ul>
+							<li>Erlang is a dynamic programming language with functional features</li>
+							<li class="fragment">Labeling Erlang a functional language is somewhat controversial, especially if it is compared against FP languages such as Haskell</li>
+							<li class="fragment">The sequential sub-set of Erlang is, however, pretty much functional</li>
+						</ul>
+						
+					</section>
+
+					<section style="top: -20px; display: none;" class="past">
+						<h3>What is Erlang?</h3>
+
+						<p>Erlang has a runtime system (ERTS) that provides powerful and efficient concurrency, parallelism and distribution</p>
+						
+					</section>
+
+					<section style="top: -20px; display: none;" class="past">
+						<h3>What is Erlang?</h3>
+
+						<p>The Erlang distribution comes with a set of libraries known as the Open Telecom Platform (OTP) that actually allow the Erlang platform to do what it says it can do on the box, with regards to robustness etc</p>
+						
+					</section>
+
+					<section style="top: -20px; display: none;" class="past">
+						<h3>What is Erlang?</h3>
+
+						<p>Most of the time, when we think of Erlang and its capabilities, we are really referring to ERTS and OTP</p>
+
+					</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h2>A brief history of Erlang and OTP</h2>
+					<p>Summary from Erlang Programming, Cesarini &amp; Thompson O'Reilly Media Inc, and various resources found on the Erlang Wikipedia entry</p>
+							
+
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="past">
+					Mid 1980's - Ericsson's Computer Science Laboratory tasked with investigating languages for next generation telecom products
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<p>Joe Armstrong, Robert Virding and Mike Williams, under the supervision of Bjarne Däcker were tasked with prototyping telecom applications with existing languages</p>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					
+					<p>The team found that no one language provided everything that a telecom application needed</p>
+					<p class="fragment">A decision was made to invent a new language</p>
+					<p class="fragment">Erlang (Ericsson Language) was born!</p>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<p>Erlang was influenced by several languages</p>
+					<ul>
+						<li class="fragment">functional: ML, Miranda</li>
+						<li class="fragment">concurrent: Ada, Modula, Chill</li>
+						<li class="fragment">logic: Prolog </li>
+						<li class="fragment">others: Smalltalk (code upgrade) and EriPascal and PLEX (older Ericsson languages)</li>
+					</ul>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<p>Originally implemented with a Prolog VM, Erlang was refined over four years</p>
+					<p class="fragment">There were several principles guiding Erlang's design, such as:
+						</p><ul>
+							<li class="fragment">Errors will occur/ let it crash</li>
+							<li class="fragment">The system must keep running</li>
+						</ul>
+					<p></p>
+					<p class="fragment">Mike Williams wrote the first C-based VM in 1991</p>
+					<p class="fragment">In 1992 the first commercial Erlang-based project (cordless phone mobility product) was started and was launched in 1994</p>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<p>In 1995, Erlang was mature enough to be used in larger telephony projects</p>
+					<p class="fragment">The OTP libraries were released in 1996</p>
+					<p class="fragment">In 1998, the AXD301 switch was announced, and reportedly has 1-2 million lines of Erlang and achieved nine 9's uptime</p>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<p>In early 1998, Erlang was banned from Ericsson, citing a want to be a consumer of software technologies, not a producer</p>
+					<p class="fragment">Joe Armstrong and many of the Erlang team left Ericsson at that time</p>
+					<p class="fragment">In late 1998, Erlang and OTP were released under an Open Source license and have been freely available ever since</p>
+					<p class="fragment">Subsequently the ban has been lifted and Armstrong rejoined Ericsson in 2004</p>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h2>Basics of the language</h2>
+				</section>
+
+				
+					<section style="top: -20px; display: none;" class="past">
+						<h3>Erlang, as a language, is fairly simple and concise</h3>
+						<ul>
+							<li class="fragment">Sequential subset</li>
+							<ul>
+								<li class="fragment">strictly evaluated</li>
+								<li class="fragment">has a simple dynamic, yet strong type system</li>
+								<li class="fragment">has single assignment on 'variables'</li>
+							</ul>
+							<li class="fragment">has its concurrency features built into the language and type system themselves (not a library)</li>
+							 	<ul>
+							 		<li class="fragment">spawning, linking and message passing between light-weight processes</li>
+							 	</ul>
+						</ul>
+					</section>
+
+					
+
+					<section style="top: -20px; display: none;" class="past">
+						<h3>But is it a functional language?</h3>
+
+						<p class="fragment">Erlang doesn't have the functional programming machinery of Haskell or Scala...</p>
+
+						<p class="fragment">...but it's certainly not without plenty of features you'd expect in a language that is functional...</p>
+
+						<p class="fragment">...and the sequential sub-set of the language can be considered functional</p>
+
+					</section>
+					
+					<section style="top: -20px; display: none;" class="past">
+						<h3>Functional language features</h3> 
+						<ul>
+							<li class="fragment">Lambda expressions and closures are simple...</li>
+							<li class="fragment">...but currying and partial application are hard, if not impossible</li>
+							<li class="fragment">powerful pattern matching, moving conditional logic to the outside of functions</li>
+							<li class="fragment">strictly/ eagerly evaluated, so no infinite lists etc</li>
+							<li class="fragment">functions, while declarative and SSA, are impure, side effects can occur in any context, deep in the call stack...</li>
+							<li class="fragment">...but it could be argued, however, that side-effects (such as I/O) occur only in the concurrent part of the language (through the actor/ process interface [more later])</li>
+							<li class="fragment">Dialyzer - static code analysis and type checking</li>
+						</ul>
+					</section>
+					
+					
+
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Selected features in (a little) detail</h3>
+				</section>
+
+				
+				<section style="top: -20px; display: none;" class="past">
+					<h2>Modules and Functions</h2>
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Modules</h3>
+					<ul>
+						<li class="fragment">are the unit of compilation in Erlang</li>
+						<li class="fragment">are a collection of functions and other declarations and definitions</li>
+						<li class="fragment">have a name, and are implemented in a file called <code>moduleName.erl</code></li>
+						<li class="fragment">flat name space</li>
+					</ul>
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>A simple module</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(my_module). <span style="color: #008800; font-style: italic">% module name</span>
+<span style="color: #008800; font-style: italic">% module attributes</span>
+-<span style="color: #999999; font-weight: bold">export</span>([add<span style="color: #666666">/2</span>, square<span style="color: #666666">/1</span>, square_add<span style="color: #666666">/2</span>, print_square<span style="color: #666666">/1</span>]). <span style="color: #008800; font-style: italic">% functions (with arity) to be exported</span>
+
+<span style="color: #008800; font-style: italic">% function declarations</span>
+
+<span style="color: #00A000">add</span>(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #B8860B">Y</span>.
+
+<span style="color: #00A000">square</span>(<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #B8860B">X</span> <span style="color: #666666">*</span> <span style="color: #B8860B">X</span>.
+
+<span style="color: #00A000">square_add</span>(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #B8860B">Z</span> <span style="color: #666666">=</span> add(<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Y</span>),
+	square(<span style="color: #B8860B">Z</span>).
+
+<span style="color: #00A000">print_square</span>(<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span>
+	<span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span>(<span style="color: #BB4444">"The square of </span><span style="color: #BB6688; font-weight: bold">~p</span><span style="color: #BB4444"> is: </span><span style="color: #BB6688; font-weight: bold">~p</span><span style="color: #BB6622; font-weight: bold">\n</span><span style="color: #BB4444">"</span>, [<span style="color: #B8860B">X</span>, square(<span style="color: #B8860B">X</span>)]).
+</pre></div>
+
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Compiling and using my_module</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">shell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> c(my_module).
+<span style="color: #888888">{ok,my_module}</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">my_module</span>:<span style="color: #00A000">add</span>(<span style="color: #666666">1</span>,<span style="color: #666666">2</span>).
+<span style="color: #888888">3</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #0000FF; font-weight: bold">my_module</span>:<span style="color: #00A000">square_add</span>(<span style="color: #666666">3</span>,<span style="color: #666666">5</span>).
+<span style="color: #888888">64</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #0000FF; font-weight: bold">my_module</span>:<span style="color: #00A000">print_square</span>(<span style="color: #666666">9</span>).
+<span style="color: #888888">The square of 9 is: 81</span>
+<span style="color: #888888">ok</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> 
+</pre></div>
+
+
+
+
+<br><ul><li>Line 1 (<code>c(my_module).</code>) creates <code>my_module.beam</code>, which is the byte-code file for the module that gets executed</li>
+<li> <code>my_module.beam</code> can also be generated by the Erlang compiler on the command-line with <code>$erlc my_module.erl</code></li></ul>  
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Do you mean Recursion?</h3>
+					<p class="fragment">Erlang does not have loops, recursion is used instead</p>
+
+<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(factorial).
+
+-<span style="color: #999999; font-weight: bold">export</span>([fac<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">fac</span> (<span style="color: #666666">0</span>) <span style="color: #666666">-&gt;</span> <span style="color: #666666">1</span>;
+<span style="color: #00A000">fac</span> (<span style="color: #B8860B">N</span>) <span style="color: #AA22FF; font-weight: bold">when</span> <span style="color: #B8860B">N</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">N</span> <span style="color: #666666">*</span> fac(<span style="color: #B8860B">N</span><span style="color: #666666">-1</span>).
+</pre></div>
+
+
+				</section>
+
+				
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Recursion and Tail-Call Optimisation</h3>
+					<ul>
+						<li class="fragment">In many languages, Erlang included, recursion is fraught with danger, as each recursive call consumes stack<p></p>
+						</li><li class="fragment">In many languages, Erlang included, an optimisation that can avoid this problem called Tail Call Optimisation (TCO), is included in the compiler<p></p>
+						</li><li class="fragment">If a recursive call is the final call in a function (a tail call), no stack is consumed<p></p>
+						</li><li class="fragment">The old stack frame is effectively replaced with the frame of the recursive call<p></p>
+					</li></ul>
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Recursion and Tail-Call Optimisation</h3>
+					<p class="fragment">We can re-write factorial to use a tail-call, by introducing an accumulator, a standard FP pattern</p>
+					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(factorial).
+<span style="color: #008800; font-style: italic">% pretty much the same example as http://learnyousomeerlang.com/recursion</span>
+-<span style="color: #999999; font-weight: bold">export</span>([fac<span style="color: #666666">/1</span>, tail_fac<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">fac</span> (<span style="color: #666666">0</span>) <span style="color: #666666">-&gt;</span> <span style="color: #666666">1</span>;
+<span style="color: #00A000">fac</span> (<span style="color: #B8860B">N</span>) <span style="color: #AA22FF; font-weight: bold">when</span> <span style="color: #B8860B">N</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">N</span> <span style="color: #666666">*</span> fac(<span style="color: #B8860B">N</span><span style="color: #666666">-1</span>).
+
+<span style="color: #00A000">tail_fac</span>(<span style="color: #B8860B">N</span>) <span style="color: #666666">-&gt;</span> tail_fac(<span style="color: #B8860B">N</span>, <span style="color: #666666">1</span>).
+
+<span style="color: #00A000">tail_fac</span>(<span style="color: #666666">0</span>, <span style="color: #B8860B">Acc</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">Acc</span>;
+<span style="color: #00A000">tail_fac</span>(<span style="color: #B8860B">N</span>, <span style="color: #B8860B">Acc</span>) <span style="color: #AA22FF; font-weight: bold">when</span> <span style="color: #B8860B">N</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">-&gt;</span> tail_fac(<span style="color: #B8860B">N</span><span style="color: #666666">-1</span>, <span style="color: #B8860B">N</span><span style="color: #666666">*</span><span style="color: #B8860B">Acc</span>).
+</pre></div>
+
+
+<ul>
+<li class="fragment">The tail-recursive version protects against excessive stack usage</li>
+<li class="fragment">However, even with TCO, tail-recursive implementations are not necessarily faster than their body-recursive counterparts</li>
+</ul>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Higher Order Functions</h3>
+					<p>Key functional programming capability - create, pass around and call functions as variables</p>
+
+					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #B8860B">Fa</span> <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #666666">1</span> <span style="color: #AA22FF; font-weight: bold">end</span>.
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #B8860B">Fa</span>(<span style="color: #666666">2</span>).
+<span style="color: #888888">3</span>
+</pre></div>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Closures</h3>
+					<ul>	
+						<li>Annonymously-created functions remember their calling context</li>
+						<li class="fragment">This capability can be used to implement closures - functions that are 'customised' by their calling context to be used later</li>
+					
+					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #B8860B">Fb</span> <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">fun</span>(<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #AA22FF; font-weight: bold">fun</span>(<span style="color: #B8860B">Y</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #B8860B">Y</span> <span style="color: #AA22FF; font-weight: bold">end</span> <span style="color: #AA22FF; font-weight: bold">end</span>.
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #B8860B">Fc</span> <span style="color: #666666">=</span> <span style="color: #B8860B">Fb</span>(<span style="color: #666666">5</span>).
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #B8860B">Fc</span>(<span style="color: #666666">2</span>).
+<span style="color: #888888">7</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> <span style="color: #B8860B">Fd</span> <span style="color: #666666">=</span> <span style="color: #B8860B">Fb</span>(<span style="color: #666666">10</span>).
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">7&gt;</span> <span style="color: #B8860B">Fd</span>(<span style="color: #666666">2</span>). 
+<span style="color: #888888">12</span>
+<span style="color: #000080; font-weight: bold">8&gt;</span> <span style="color: #B8860B">Fc</span>(<span style="color: #666666">2</span>).
+<span style="color: #888888">7</span>
+<span style="color: #000080; font-weight: bold">9&gt;</span> 
+</pre></div>
+
+
+
+				</ul></section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>List HoFs</h3>
+					<code>lists</code> module
+					<p class="fragment"><code>filter, map, foldl, foldr, foreach</code></p>
+					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .1em;padding:.2em .2em;"><pre style="width: 99%;margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">filter</span>(<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">&gt;</span> <span style="color: #666666">3</span> <span style="color: #AA22FF; font-weight: bold">end</span>,[<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).
+<span style="color: #888888">[4,5,6]</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">map</span>(<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">*</span> <span style="color: #B8860B">X</span> <span style="color: #AA22FF; font-weight: bold">end</span>,[<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).   
+<span style="color: #888888">[1,4,9,16,25,36]</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">foldr</span>(<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>,<span style="color: #B8860B">Z</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">*</span> <span style="color: #B8860B">Z</span> <span style="color: #AA22FF; font-weight: bold">end</span>, <span style="color: #666666">1</span>, [<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).
+<span style="color: #888888">720</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #B8860B">SumList</span> <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">List</span>) <span style="color: #666666">-&gt;</span> <span style="color: #0000FF; font-weight: bold">lists</span>:<span style="color: #00A000">foldr</span> (<span style="color: #AA22FF; font-weight: bold">fun</span> (<span style="color: #B8860B">X</span>, <span style="color: #B8860B">Z</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #B8860B">Z</span> <span style="color: #AA22FF; font-weight: bold">end</span>, <span style="color: #666666">0</span>, <span style="color: #B8860B">List</span>) <span style="color: #AA22FF; font-weight: bold">end</span>.
+<span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #B8860B">SumList</span>([<span style="color: #666666">1</span>,<span style="color: #666666">2</span>,<span style="color: #666666">3</span>,<span style="color: #666666">4</span>,<span style="color: #666666">5</span>,<span style="color: #666666">6</span>]).
+<span style="color: #888888">21</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> 
+</pre></div>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Let's leave the sequential subset behind, and look at concurrency</h3>
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h2>Concurrency</h2>
+					<ul>
+						<li>Built into the language and runtime, not the OS and not a library</li>
+						<li class="fragment">The concurrency model is asynchronous message passing between light-weight processes</li>
+						<li class="fragment">Often referred to as the actor model</li>
+						<li class="fragment">Actors are not purely functional, as the result of an asynchronous message is effectively <code>void</code>
+						</li><li class="fragment">Joe Armstrong refers to Erlang as "possibly the only object-oriented language" (Alan Kay OO):</li>
+						<ul>
+							
+							<li class="fragment">Encapsulation</li>
+							<li class="fragment">Message passing</li>
+						</ul>
+						<li class="fragment">Most of the well-known attributes of Erlang are based on it's concurrency implementation</li>
+					</ul>
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Spawning a process</h3>
+
+					<p class="fragment"><code>
+Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
+    </code></p>
+    <p class="fragment"><code>Pid</code> is the process identifier of the newly spawned process</p>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Sending a message</h3>
+
+					<p class="fragment"><code>Pid ! Message.</code></p>
+    				<p class="fragment"><code>Message</code> can be any Erlang term</p>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Receiving a message</h3>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #AA22FF; font-weight: bold">receive</span>
+    <span style="color: #B8860B">Pattern1</span> <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">Expression1</span>;
+    <span style="color: #B8860B">Pattern2</span> <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">Expression2</span>;
+    ...
+    <span style="color: #B8860B">PatternN</span> <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">ExpressionN</span>
+<span style="color: #AA22FF; font-weight: bold">end</span>. 
+</pre></div>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Maintaining state</h3>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #00A000">loop</span>(<span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">receive</span>
+        <span style="color: #B8860B">Pattern</span> <span style="color: #666666">-&gt;</span> 
+            <span style="color: #B8860B">NewState</span> <span style="color: #666666">=</span> some_code (<span style="color: #B8860B">State</span>),
+            loop (<span style="color: #B8860B">NewState</span>).
+    <span style="color: #AA22FF; font-weight: bold">end</span>. 
+</pre></div>
+
+
+
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+
+					<h3>Concurrency Example - a simple counter</h3>
+					<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: left;background: #f8f8f8; overflow:auto;width:46%;border:solid gray;border-width:.1em .1em .1em .1em;padding:.2em .2em;"><pre style="width: 100%;margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counter).
+
+-<span style="color: #999999; font-weight: bold">export</span>([create<span style="color: #666666">/0</span>, start<span style="color: #666666">/0</span>, delete<span style="color: #666666">/1</span>, increment<span style="color: #666666">/1</span>, count<span style="color: #666666">/1</span>, reset<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">create</span> () <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF">spawn</span>(<span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>, start, []).
+
+<span style="color: #00A000">start</span> () <span style="color: #666666">-&gt;</span> loop(<span style="color: #666666">0</span>).
+
+<span style="color: #00A000">delete</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> delete,
+    ok.
+
+<span style="color: #00A000">increment</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> increment,
+    ok.
+
+<span style="color: #00A000">count</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> {count, self()},
+    <span style="color: #AA22FF; font-weight: bold">receive</span>
+        {<span style="color: #B8860B">Pid</span>,{count, <span style="color: #B8860B">Count</span>}} <span style="color: #666666">-&gt;</span>
+            <span style="color: #B8860B">Count</span>;
+        _ <span style="color: #666666">-&gt;</span> error
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+
+<span style="color: #00A000">reset</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> reset,
+    ok.
+</pre></div>
+
+<!-- HTML generated using hilite.me --><div style="font-size: xx-large;float: right;background: #f8f8f8; overflow:auto;width:50%;border:solid gray;border-width:.1em .1em .1em .1em;padding:.2em .2em;"><pre style="width: 100%;margin: 0; line-height: 125%"><span style="color: #00A000">loop</span>(<span style="color: #B8860B">Count</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">receive</span>
+        delete <span style="color: #666666">-&gt;</span>
+            ok;
+        increment <span style="color: #666666">-&gt;</span>
+            loop (<span style="color: #B8860B">Count</span><span style="color: #666666">+1</span>);
+        {count, <span style="color: #B8860B">Pid</span>} <span style="color: #666666">-&gt;</span>
+            <span style="color: #B8860B">Pid</span> <span style="color: #666666">!</span> {self(),{count, <span style="color: #B8860B">Count</span>}},
+            loop (<span style="color: #B8860B">Count</span>);
+        reset <span style="color: #666666">-&gt;</span>
+            loop (<span style="color: #666666">0</span>);
+        <span style="color: #B8860B">Unexpected</span> <span style="color: #666666">-&gt;</span>
+            <span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span> (<span style="color: #BB4444">"Unexpected message: </span><span style="color: #BB6688; font-weight: bold">~p~n</span><span style="color: #BB4444">"</span>, [<span style="color: #B8860B">Unexpected</span>]),
+            loop (<span style="color: #B8860B">Count</span>)
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+</pre></div>
+
+
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Process links</h3>
+					<ul>
+						<li>Links can be made between processes</li>
+						<li>If a process dies, all processes linked to it are notified, and by default die too</li>
+						<li><code>link(Pid)</code> or <code>Pid = spawn_link(M,F,[A])</code></li>
+						<li>A process can be made a 'system process' meaning it won't die if a linked process dies<p></p>
+					</li></ul> 
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Monitors</h3>
+					<p>Are more flexible and expressive and less drastic than links </p> 
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="past">
+					<h2>Erlang: the system</h2>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+						<h3>Erlang has a runtime system</h3> <p>that (among many other things):
+							</p><ul>	
+								<li class="fragment">implements light-weight processes and message passing</li>
+								<li class="fragment">efficiently utilises multi-core systems to achieve parallelism on top of concurrency</li>
+								<li class="fragment">can scale from multi-core to distributed with very little (if any) code change
+								</li><li class="fragment">allows new/ improved code to be hot-loaded</li>
+								<li class="fragment">has multiple facilities to integrate with other languages, esp C/C++</li>
+							</ul>
+						<p></p>  
+					</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>ERTS - Erlang Runtime System</h3>
+					<ul>
+						<li class="fragment">written in C</li>
+						<li class="fragment">BEAM - Bogdan's Erlang Abstract Machine (VM)</li>
+						<li class="fragment">compilation to byte code</li>
+						<ul>
+							<li class="fragment">originally just interpreted, as it was viewed that the BEAM interpreter was fast enough</li>
+							<li class="fragment">more recently, a native JiT compiler has been used (HiPE)</li>
+						</ul>
+						<li class="fragment">From now on in this talk VM, BEAM and ERTS are synonymous</li> 
+					</ul>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Erlang Processes</h3>
+					<ul>
+						<li>Erlang processes are light-weight processes, ~300 words memory overhead each, created in microseconds</li>
+						<li class="fragment">VM manages message passing between processes...</li>
+						<li class="fragment">...by copying the message (in memory) from process to process in a lock-free manner</li>
+						<li class="fragment">Not all light-weight process or actor libraries are the same...</li>
+						<li class="fragment">unlike, say Akka, Erlang processes are isolated from each other and won't crash the whole VM</li> 
+					</ul>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Concurrency and Parallelism</h3>
+					<ul>
+						<li>VM is a single OS process</li>
+						<li class="fragment">before the days of multi-core CPUs and Symmetrical Multi-Processing (SMP)</li>
+							<ul>
+								<li class="fragment">processes ran concurrently, but not in parallel</li>
+								<li class="fragment">more VM instances on remote machines was the only way to be parallel</li>
+							</ul>
+						<li class="fragment">since multi-core and SMP</li>
+							<ul>
+								<li class="fragment">VM is multi-threaded and can execute processes in parallel</li>
+								<li class="fragment">VM has one thread per CPU core for processes, plus other system threads</li>
+								<li class="fragment">did not require a change in the language, only in the VM</li>
+							</ul>
+						
+					</ul>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Processes schedulers</h3>
+					<ul>
+						<li>each thread in the VM for running processes has a scheduler</li>
+						<li class="fragment">the scheduler handles scheduling a pool of processes in a run queue</li>
+						<li class="fragment">n:m mapping between Erlang processes and OS threads</li>
+						<li class="fragment">processes can be moved between threads to load balance</li>
+					</ul>
+
+				</section>
+
+				
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Memory Management</h3>
+					<p>The VM manages memory automatically and is garbage-collected (generational copying garbage collector)</p>
+					<ul>
+						<li class="fragment">two alternating duty heaps, only active memory is copied from one to the other when they switch</li>
+						<li class="fragment">two generations of the heap are maintained, current and old</li>
+						<li class="fragment">the current generation is considered to be more likely to be transient memory</li>
+						<li class="fragment">two garbage collector sweeps are executed on different conditions</li>
+						<ul>
+							<li class="fragment">shallow GC: as needed, only looks at the current generation, after three GCs current will become old</li>
+							<li class="fragment">deep GC: checks old as well, only triggered when shallow does not recycle enough memory</li>
+						</ul>
+					</ul>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Memory Management cont'd</h3>
+					<ul>
+						<li>process isolation means individual processes can be stopped for GC without others being affected</li>
+						<li class="fragment">short lived processes may never be GC'd (just deallocated)</li>
+						<li class="fragment">small processes are quick to GC</li>
+					</ul>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Hot module reloading</h3>
+					<ul>
+						<li>The VM can detect when a .beam file has changed and load it into the system</li>
+						<li class="fragment">Only two versions of the code can be maintained in the system (old and new)</li>
+						<li class="fragment">The old version of the module still exists and is used by an processes making local calls to its functions</li>
+						<li class="fragment">An external call to the module (<code>module:function(Arguments)</code>) will use the new version</li>
+						<li class="fragment">This is the extent of the basic hot code loading capability in Erlang</li>
+					</ul>
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Distributed Erlang</h3>
+					<ul>
+						<li>Each ERTS instance is called a node</li>
+						<li class="fragment">clusters of nodes can be created and include location services etc</li>
+						<li class="fragment">remotely spawning a process has a similar interface to locally</li>
+							<ul>
+								<li class="fragment"><code>Pid = spawn(Node, Module, Function, [Arguments]).</code></li>
+								<li class="fragment">Pids are location transparent</li>
+							</ul>
+					</ul>
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Interfacing with native code - C/C++</h3>
+					<ul>
+						<li class="fragment">NIFs: Natively Implemented Functions</li>
+							<ul>
+								<li class="fragment">allows a C/C++ object file with a set of functions to be loaded into a running VM</li>
+								<li class="fragment">native functions are called as if they were Erlang functions</li>
+								<li class="fragment">if the native code fails, the VM will crash</li>
+							</ul>
+						<li class="fragment">Port Programs</li>
+							<ul>
+								<li class="fragment">allows a C/C++ program to interface with the VM through stdin/out</li>
+								<li class="fragment">appears to be a normal Erlang process to Erlang code</li>
+								<li class="fragment">completely isolated at the OS process level</li>
+							</ul>
+						<li class="fragment">Linked In Port Drivers</li>
+							<ul>
+								<li class="fragment">allows a C/C++ object file with a set of functions to be loaded into a running VM</li>
+								<li class="fragment">appears to be a normal Erlang process to Erlang code</li>
+								<li class="fragment">if the native code fails, the VM will crash</li>
+							</ul>
+					
+					</ul>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+					<h3>Interfacing with other languages</h3>
+					<ul>
+						<li class="fragment">Java - jInterface</li>
+						<li class="fragment">OTP.NET</li>
+						<li class="fragment">Py-Interface</li>
+						<li class="fragment">Perl Erlang Port</li>
+						<li class="fragment">PHP/Erlang</li>
+						<li class="fragment">Haskell/Erlang FFI</li>
+						<li class="fragment">...</li>
+					</ul>
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="past">
+					<h2>The Open Telecom Platform (OTP) Libraries</h2>
+					<p>
+						
+					</p>
+				</section>
+
+				<section style="top: -20px; display: none;" class="past">
+						<h3>The OTP libraries</h3> <p class="fragment">are a set of well-tested libraries (and design principles) that actually allow the Erlang platform to do what it says it can do on the box:
+						</p><ul>
+							<li class="fragment">fault-tolerance</li>
+							<li class="fragment">high availability and up-time</li>
+							<li class="fragment">granular management of highly-concurrent systems</li>
+							<li class="fragment">live patching of systems in production!</li>
+							<li class="fragment">web-scale!</li>
+						</ul>
+						<p></p>
+						<p>&nbsp;</p>
+						<p class="fragment">OTP is the <del>recommended</del> <b>only sane</b> way to develop non-trivial Erlang-based production software</p>
+						<p class="fragment">Despite its name, OTP is not domain-specific to Telecom applications</p>
+
+					</section>
+
+					<section style="top: -349px; display: block;" class="past">
+						<h3>Why use OTP?</h3>
+						<ul>
+							<li>Writing robust concurrent code by hand with spawns, !, receive, links and monitors for each service is cumbersome and error prone</li>
+							<li class="fragment">A simple synchronous call to a process to do some work and return a result could be a dozen lines of code to make fault-tolerant</li>
+							<li class="fragment">buggy receive blocks can leave messages on the queue and leak memory</li>
+							<li class="fragment">body-recursive function calls can blow the stack</li>
+							<li class="fragment">The OTP libraries provide a framework to do concurrency robustly, in a well-thought out and well-tested way</li>
+							<li class="fragment">The programmer is forced to think about process interaction and reliability</li>
+						</ul>
+
+					</section>
+
+					<section style="top: -227px; display: block;" class="past">
+						<h3>OTP process modules</h3>
+						<p>To build an OTP application, several process modules need to be written</p>
+						<ul>
+							<li class="fragment">Supervisor - process that supervises other processes</li>
+							<li class="fragment">Worker - process that implements application functionality</li>
+							<li class="fragment">These modules must conform to behaviours, which are like contracts or interfaces, promising certain callback functions have been implemented</li>
+						</ul>
+
+					</section>
+					
+
+					<section style="top: -328px; display: block;" class="past"><h3>OTP supervisors</h3>
+						<ul>
+							<li>OTP supervisors are the core component of OTP's fault tolerance capabilities</li>
+							<li class="fragment">supervisors are processes that monitor the state of a set of other processes, and take action if they crash</li>
+							<ul>
+								<li class="fragment">let the process crash and do nothing</li>
+								<li class="fragment">restart the process that crashed</li>
+								<li class="fragment">restart the process that crashed as well as some other related processes</li>
+							</ul>
+							<li class="fragment">processes under supervision can be workers (processes that implement functionality) or other supervisors</li>
+							<li class="fragment">the supervision relationship then forms a tree, with workers at the leaf nodes</li>
+						</ul>
+					</section>
+
+					<section style="top: -350px; display: block;" class="present">
+						<h3>Supervision Tree </h3>
+						<img src="./Erlang & OTP - A Quick Introduction..._files/sup-tree.png" style="width: 85%">
+					</section>
+
+					<section style="top: -243.5px; display: block;" class="future">
+						<h3>Worker processes - gen_servers</h3>
+						<ul>
+							<li>gen_server is one kind of worker behaviour - for processes that will receive messages and do work</li>
+							<li class="fragment">there are callbacks for messages that can be synchronous or asynchronous</li>
+							<li class="fragment">initialisation, termination and code upgrade callbacks are also included</li>
+							<li class="fragment">the call chain from a client process to a gen_server process and back is a little confusing at first</li>
+						</ul>
+					</section>
+
+					<section style="top: -180px; display: block;" class="future">
+						<h3>gen_servers - creating</h3>
+						<ul>
+							<li class="fragment">through an API or at startup, a request is made to a supervisor to spawn a gen_server instance</li>
+							<li class="fragment">the request goes via the OTP system back to the gen_server module and calls the init callback</li>
+							<li class="fragment">the spawned gen_server process is linked to the supervisor</li>
+						</ul>
+					</section>
+
+					<section style="top: -222px; display: block;" class="future">
+						<h3>gen_servers - accessing functionality</h3>
+						<ul>
+							<li class="fragment">through the developer's gen_server instance API, client calls (synchronous) or casts (asynchrous) are made</li>
+							<li class="fragment">the calls and casts go from the client process via the OTP system, which finds the correct gen_server process and calls the appropriate callback</li>
+							<li class="fragment">the response to the call or cast (if any) goes back via OTP to the client process</li>
+						</ul>
+					</section>
+
+					<section style="top: -20px; display: none;" class="future">
+						<h3>OTP applications</h3>
+						<p>are a set of supervisors, workers and supporting modules that make up a self-contained OTP application
+						</p><ul>
+							<li class="fragment">specify a code directory structure</li>
+							<li class="fragment">specify the supervisors and other modules of the application</li>
+							<li class="fragment">start (usually by starting the root supervisor) and stop the application</li>
+						</ul>
+					</section>
+
+					<section style="top: -20px; display: none;" class="future">
+						<h3>Example - Upgrading the counter service to use OTP</h3>
+						<ul>
+							<li class="fragment">implement an OTP application and OTP supervisor for fault-tolerance</li>
+							<li class="fragment">a counter process becomes an OTP gen_server to avoid the manual fault-tolerance pitfalls</li>
+							<li class="fragment">abstract away from direct Pid references to counter processes</li>
+						</ul>
+					</section>
+
+					<section style="top: -20px; display: none;" class="future">
+						<h3>Counters Application</h3>
+						
+						<!-- HTML generated using hilite.me --><div class="fragment" style="font-size: xx-large;float:left; background: #f8f8f8; overflow:auto;width:35%;border:solid gray;border-width:.1em .1em .1em .2em;padding:.2em .2em;"><p> Consists of a .app file specifying the app</p><pre style="width: 99%;margin: 0; line-height: 125%">{application, counters,
+ [
+  {description, <span style="color: #BB4444">""</span>},
+  {vsn, <span style="color: #BB4444">"1.1.1"</span>},
+  {modules, [
+            
+             counters_app,
+             counters_sup,
+             counter_store,
+             counter,
+             counters
+            ]},
+  {registered, [counters_sup]},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, {counters_app,[]}}
+ ]}.
+</pre></div>
+
+<!-- HTML generated using hilite.me --><div class="fragment" style="float:right; background: #f8f8f8; overflow:auto;width:60%;border:solid gray;border-width:.1em .1em .1em .2em;padding:.2em .2em;"><p>and an application.erl file for starting the root supervisor</p><pre style="width: 99%;margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counters_app).
+
+-<span style="color: #999999; font-weight: bold">behaviour</span>(application).
+
+-<span style="color: #999999; font-weight: bold">export</span>([start<span style="color: #666666">/2</span>, stop<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">start</span>(_<span style="color: #B8860B">StartType</span>, _<span style="color: #B8860B">StartArgs</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">counter_store</span>:<span style="color: #00A000">init</span>(),
+    <span style="color: #AA22FF; font-weight: bold">case</span> <span style="color: #0000FF; font-weight: bold">counters_sup</span>:<span style="color: #00A000">start_link</span>() <span style="color: #AA22FF; font-weight: bold">of</span> <span style="color: #008800; font-style: italic">%starts root supervisor</span>
+        {ok, <span style="color: #B8860B">Pid</span>} <span style="color: #666666">-&gt;</span>
+            {ok,<span style="color: #B8860B">Pid</span>};
+        <span style="color: #B8860B">Other</span> <span style="color: #666666">-&gt;</span>
+            {error, <span style="color: #B8860B">Other</span>}
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+
+<span style="color: #00A000">stop</span>(_<span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span> 
+    ok.
+</pre></div>
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Counters Supervisor implementation</h3>
+					<p>Two main duties:</p>
+
+					<ol>
+						<li class="fragment">implements supervisor and counter gen_server start logic</li>
+						<li class="fragment">specifies the behaviour of the supervisor with regards to restarting children (counter gen_server workers)</li>
+					</ol>
+					
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Counters Supervisor</h3>
+
+					
+				<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counters_sup).
+-<span style="color: #999999; font-weight: bold">behaviour</span>(supervisor).
+-<span style="color: #999999; font-weight: bold">export</span>([start_link<span style="color: #666666">/0</span>, start_child<span style="color: #666666">/1</span>, start_test<span style="color: #666666">/0</span>]).
+-<span style="color: #999999; font-weight: bold">export</span>([init<span style="color: #666666">/1</span>]).
+-<span style="color: #999999; font-weight: bold">define</span>(<span style="color: #880000">SERVER</span>, <span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>).
+
+<span style="color: #00A000">start_link</span>() <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">supervisor</span>:<span style="color: #00A000">start_link</span>({local, <span style="color: #666666">?</span><span style="color: #B8860B">SERVER</span>}, <span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>, []).
+
+<span style="color: #00A000">start_child</span>(<span style="color: #B8860B">Name</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">supervisor</span>:<span style="color: #00A000">start_child</span>(<span style="color: #666666">?</span><span style="color: #B8860B">SERVER</span>, [<span style="color: #B8860B">Name</span>]).
+
+<span style="color: #00A000">start_test</span>() <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">counter_store</span>:<span style="color: #00A000">init</span>(),
+    {ok, <span style="color: #B8860B">Pid</span>} <span style="color: #666666">=</span> <span style="color: #0000FF; font-weight: bold">supervisor</span>:<span style="color: #00A000">start_link</span>({local, <span style="color: #666666">?</span><span style="color: #B8860B">SERVER</span>}, <span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>, []),
+    <span style="color: #AA22FF">unlink</span>(<span style="color: #B8860B">Pid</span>).
+
+<span style="color: #00A000">init</span>([]) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Counter</span> <span style="color: #666666">=</span> {counter, {counter, start_link, []}, permanent, <span style="color: #666666">1000</span>
+    			, worker, [counter]},
+    <span style="color: #B8860B">Children</span> <span style="color: #666666">=</span> [<span style="color: #B8860B">Counter</span>],
+    <span style="color: #B8860B">RestartStrategy</span>  <span style="color: #666666">=</span> {simple_one_for_one, <span style="color: #666666">10</span> , <span style="color: #666666">10</span>},
+    {ok, {<span style="color: #B8860B">RestartStrategy</span>, <span style="color: #B8860B">Children</span>}}.
+</pre></div>
+
+<p>All the OTP supervisor goodness is handled by the OTP libraries</p>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Counter gen_server implementation</h3>
+					<ul>
+
+						<li>The counter gen_server is where the original message-handling logic will be ported</li>
+						<li class="fragment">Convention lays out the gen_server file into three sections</li>
+						<ol>
+							<li class="fragment">Header - exports, definitions, data structures</li>
+							<li class="fragment">API - functions that abstract the gen_server's function and call into OTP</li>
+							<li class="fragment">Callback - functions that implement the required gen_server behaviors</li>
+						</ol>
+					</ul>
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+
+					<h3>Counter gen_server header section</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counter).
+
+-<span style="color: #999999; font-weight: bold">behaviour</span>(gen_server).
+
+-<span style="color: #999999; font-weight: bold">export</span>([start_link<span style="color: #666666">/1</span>, create<span style="color: #666666">/1</span>, delete<span style="color: #666666">/1</span>, increment<span style="color: #666666">/2</span>, count<span style="color: #666666">/1</span>, reset<span style="color: #666666">/1</span>]).
+
+-<span style="color: #999999; font-weight: bold">export</span>([init<span style="color: #666666">/1</span>, handle_call<span style="color: #666666">/3</span>, handle_cast<span style="color: #666666">/2</span>, handle_info<span style="color: #666666">/2</span>, terminate<span style="color: #666666">/2</span>, code_change<span style="color: #666666">/3</span>]).
+
+-<span style="color: #999999; font-weight: bold">define</span>(<span style="color: #880000">SERVER</span>, <span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>).
+
+-<span style="color: #999999; font-weight: bold">record</span>(<span style="color: #A0A000">state</span>, {name, count}).
+</pre></div>
+
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+
+					<h3>Counter gen_server API section</h3>
+
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #00A000">start_link</span>(<span style="color: #B8860B">Name</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">gen_server</span>:<span style="color: #00A000">start_link</span>(<span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>, [<span style="color: #B8860B">Name</span>], []).
+
+<span style="color: #00A000">create</span> (<span style="color: #B8860B">Name</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">counters_sup</span>:<span style="color: #00A000">start_child</span>(<span style="color: #B8860B">Name</span>).
+
+<span style="color: #00A000">delete</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">gen_server</span>:<span style="color: #00A000">cast</span>(<span style="color: #B8860B">Pid</span>, delete).
+
+<span style="color: #00A000">increment</span> (<span style="color: #B8860B">Pid</span>, <span style="color: #B8860B">N</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">gen_server</span>:<span style="color: #00A000">cast</span>(<span style="color: #B8860B">Pid</span>, {increment, <span style="color: #B8860B">N</span>}).
+
+<span style="color: #00A000">count</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">gen_server</span>:<span style="color: #00A000">call</span>(<span style="color: #B8860B">Pid</span>, count).
+
+<span style="color: #00A000">reset</span> (<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">gen_server</span>:<span style="color: #00A000">cast</span>(<span style="color: #B8860B">Pid</span>, reset).
+</pre></div>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+
+					<h3>Counter gen_server Callback section</h3>
+					<!-- HTML generated using hilite.me --><div style=" background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #00A000">init</span> ([<span style="color: #B8860B">Name</span>]) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">io</span>:<span style="color: #00A000">format</span>(<span style="color: #BB4444">"init on a counter called: </span><span style="color: #BB6688; font-weight: bold">~p~n</span><span style="color: #BB4444">"</span>, [<span style="color: #B8860B">Name</span>]),
+    <span style="color: #0000FF; font-weight: bold">counter_store</span>:<span style="color: #00A000">insert</span>(<span style="color: #B8860B">Name</span>, self()),
+    {ok, <span style="color: #A0A000">#state</span>{name<span style="color: #666666">=</span><span style="color: #B8860B">Name</span>, count<span style="color: #666666">=0</span>}}.
+
+<span style="color: #00A000">handle_call</span> (count, _<span style="color: #B8860B">From</span>, <span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Count</span> <span style="color: #666666">=</span> <span style="color: #B8860B">State</span><span style="color: #A0A000">#state.count</span>,
+    {reply, {ok, <span style="color: #B8860B">Count</span>}, <span style="color: #B8860B">State</span>}.
+
+<span style="color: #00A000">handle_cast</span> (delete, <span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    {stop, normal, <span style="color: #B8860B">State</span>};
+<span style="color: #00A000">handle_cast</span> ({increment, <span style="color: #B8860B">N</span>}, <span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Count</span> <span style="color: #666666">=</span> <span style="color: #B8860B">State</span><span style="color: #A0A000">#state.count</span>,
+    <span style="color: #B8860B">NewCount</span> <span style="color: #666666">=</span> <span style="color: #B8860B">Count</span> <span style="color: #666666">+</span> <span style="color: #B8860B">N</span>,
+    {noreply, <span style="color: #B8860B">State</span><span style="color: #A0A000">#state</span>{count <span style="color: #666666">=</span> <span style="color: #B8860B">NewCount</span>}};
+<span style="color: #00A000">handle_cast</span> (reset, <span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #B8860B">Name</span> <span style="color: #666666">=</span> <span style="color: #B8860B">State</span><span style="color: #A0A000">#state.name</span>,
+    {noreply, <span style="color: #B8860B">State</span><span style="color: #A0A000">#state</span>{count <span style="color: #666666">=</span> <span style="color: #666666">0</span>}}.
+</pre></div>
+
+
+				<ul>
+					<li>the callbacks implement the counter's functionality in place of the receive block in the non-OTP example</li>
+				</ul>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+
+					<h3>Counter gen_server Callback section cont'd</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #00A000">handle_info</span>(timeout,<span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    {stop, normal, <span style="color: #B8860B">State</span>}.
+ 
+<span style="color: #00A000">terminate</span>(_<span style="color: #B8860B">Reason</span>, _<span style="color: #B8860B">State</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">counter_store</span>:<span style="color: #00A000">delete</span>(self()),
+    ok.
+
+<span style="color: #00A000">code_change</span>(_<span style="color: #B8860B">OldVsn</span>, <span style="color: #B8860B">State</span>, _<span style="color: #B8860B">Extras</span>) <span style="color: #666666">-&gt;</span>
+    {ok, <span style="color: #B8860B">State</span>}.
+</pre></div>
+
+				<ul>
+					<li><code>handle_info</code> handles out-of-band messages (those that don't match the <code>handle_call</code> or <code>handle_cast</code> function clauses</li>
+					<li><code>code_change</code> is a hook to allow the programmer to handle upgrades to code - it is mainly for handling changes to the shape of the gen_server's state</li>
+				</ul>
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Application API</h3>
+					<p>Convention is to abstract into an API that hides the OTP details</p>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counters).
+-<span style="color: #999999; font-weight: bold">export</span>([create<span style="color: #666666">/1</span>, delete<span style="color: #666666">/1</span>, increment<span style="color: #666666">/1</span>, increment<span style="color: #666666">/2</span>,
+            decrement<span style="color: #666666">/1</span>, decrement<span style="color: #666666">/2</span>, count<span style="color: #666666">/1</span>, reset<span style="color: #666666">/1</span>]).
+
+<span style="color: #00A000">create</span> (<span style="color: #B8860B">Name</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">case</span> <span style="color: #0000FF; font-weight: bold">counter_store</span>:<span style="color: #00A000">lookup</span>(<span style="color: #B8860B">Name</span>) <span style="color: #AA22FF; font-weight: bold">of</span>
+        {ok, _<span style="color: #B8860B">Pid</span>} <span style="color: #666666">-&gt;</span> 
+            {error, counter_exists};
+        {error, _} <span style="color: #666666">-&gt;</span>
+            {ok, <span style="color: #B8860B">Pid</span>} <span style="color: #666666">=</span> <span style="color: #0000FF; font-weight: bold">counter</span>:<span style="color: #00A000">create</span>(<span style="color: #B8860B">Name</span>),
+            {ok, <span style="color: #B8860B">Pid</span>}
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+
+<span style="color: #00A000">delete</span> (<span style="color: #B8860B">Name</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">case</span> <span style="color: #0000FF; font-weight: bold">counter_store</span>:<span style="color: #00A000">lookup</span>(<span style="color: #B8860B">Name</span>) <span style="color: #AA22FF; font-weight: bold">of</span>
+        {ok, {<span style="color: #B8860B">Pid</span>, _}} <span style="color: #666666">-&gt;</span> 
+            <span style="color: #0000FF; font-weight: bold">counter</span>:<span style="color: #00A000">delete</span>(<span style="color: #B8860B">Pid</span>),
+            <span style="color: #0000FF; font-weight: bold">counter_store</span>:<span style="color: #00A000">delete</span>(<span style="color: #B8860B">Pid</span>);
+        {error, _} <span style="color: #666666">-&gt;</span>
+            ok
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+
+<span style="color: #008800; font-style: italic">% ...</span>
+</pre></div>
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Counter store to abstract away from Pids</h3>
+					<p>The API should not use Pids directly, so use ETS to map counter names to Pids</p>
+					<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(counter_store).
+<span style="color: #008800; font-style: italic">% adapted from Logan, Merritt &amp; Carlsson, Erlang &amp; OTP in Action, Manning, 2011</span>
+-<span style="color: #999999; font-weight: bold">export</span>([init<span style="color: #666666">/0</span>, insert<span style="color: #666666">/2</span>, lookup<span style="color: #666666">/1</span>, delete<span style="color: #666666">/1</span>]).
+-<span style="color: #999999; font-weight: bold">define</span>(<span style="color: #880000">TABLE_ID</span>, <span style="color: #666666">?</span><span style="color: #B8860B">MODULE</span>).
+
+<span style="color: #00A000">init</span>() <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">ets</span>:<span style="color: #00A000">new</span>(<span style="color: #666666">?</span><span style="color: #B8860B">TABLE_ID</span>,[public,named_table]),
+    ok.
+
+<span style="color: #00A000">insert</span>(<span style="color: #B8860B">Name</span>, <span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">ets</span>:<span style="color: #00A000">insert</span>(<span style="color: #666666">?</span><span style="color: #B8860B">TABLE_ID</span>, {<span style="color: #B8860B">Name</span>, <span style="color: #B8860B">Pid</span>}).
+
+<span style="color: #00A000">lookup</span>(<span style="color: #B8860B">Name</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #AA22FF; font-weight: bold">case</span> <span style="color: #0000FF; font-weight: bold">ets</span>:<span style="color: #00A000">lookup</span>(<span style="color: #666666">?</span><span style="color: #B8860B">TABLE_ID</span>, <span style="color: #B8860B">Name</span>) <span style="color: #AA22FF; font-weight: bold">of</span>
+        [{<span style="color: #B8860B">Name</span>, <span style="color: #B8860B">Pid</span>}] <span style="color: #666666">-&gt;</span> {ok, <span style="color: #B8860B">Pid</span>};
+        [] <span style="color: #666666">-&gt;</span> {error, not_found}
+    <span style="color: #AA22FF; font-weight: bold">end</span>.
+
+<span style="color: #00A000">delete</span>(<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
+    <span style="color: #0000FF; font-weight: bold">ets</span>:<span style="color: #00A000">match_delete</span>(<span style="color: #666666">?</span><span style="color: #B8860B">TABLE_ID</span>, {'_', <span style="color: #B8860B">Pid</span>}).
+</pre></div>
+
+				</section>	
+
+
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Example session of the Counters application</h3>
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #0000FF; font-weight: bold">counters_sup</span>:<span style="color: #00A000">start_test</span>().
+<span style="color: #888888">true</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">create</span>(c1).
+<span style="color: #888888">init on a counter called: c1</span>
+<span style="color: #888888">{ok,&lt;0.38.0&gt;}</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">count</span>(c1).          
+<span style="color: #888888">{ok,0}</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">increment</span>(c1,<span style="color: #666666">5</span>).    
+<span style="color: #888888">ok</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">count</span>(c1).      
+<span style="color: #888888">{ok,5}</span>
+</pre></div>
+
+			</section>
+			<section style="top: -20px; display: none;" class="future">
+				<h3>When something goes wrong</h3>
+
+<!-- HTML generated using hilite.me --><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #000080; font-weight: bold">6&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">increment</span>(c1,crash).
+
+<span style="color: #888888">=ERROR REPORT==== 29-Oct-2013::01:03:03 ===</span>
+<span style="color: #0044DD">** Generic server &lt;0.38.0&gt; terminating </span>
+<span style="color: #0044DD">** Last message in was {'$gen_cast',{increment,crash}}</span>
+<span style="color: #0044DD">** When Server state == {state,5}</span>
+<span style="color: #0044DD">** Reason for termination == </span>
+<span style="color: #0044DD">** {badarith,[{counter,handle_cast,2,[{file,"src/counter.erl"},{line,52}]},</span>
+<span style="color: #888888">              {gen_server,handle_msg,5,[{file,"gen_server.erl"},{line,604}]},</span>
+<span style="color: #888888">              {proc_lib,init_p_do_apply,3,</span>
+<span style="color: #888888">                        [{file,"proc_lib.erl"},{line,239}]}]}</span>
+<span style="color: #888888">init on a counter called: c1</span>
+<span style="color: #888888">ok</span>
+<span style="color: #000080; font-weight: bold">7&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">count</span>(c1).          
+<span style="color: #888888">{ok,0}</span>
+<span style="color: #000080; font-weight: bold">8&gt;</span> 
+</pre></div>
+					
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+				<h3>When something goes wrong</h3>
+
+					<ul>
+						<li class="fragment">Because we have a restart of permanent in the child specification, the supervisor restarts our counter</li>
+						<li class="fragment">However, the supervisor does not automatically restore state, so the counter is back at it's initial condition (0)</li>
+						<li class="fragment">This is by design: it is unsafe to restore state automatically (it could be state that caused the crash)</li>
+						<li class="fragment">The programmer must decide how to persist state, such as through ETS tables or separation of state and code processes</li>
+
+					</ul>
+
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+
+					<h3>When something goes wrong</h3>
+					<p class="fragment">By way of a quick modification, the Counters gen_server, store and API can be modified to effectively (re)store values from the ETS table</p> 
+
+					<!-- HTML generated using hilite.me --><div class="fragment" style="font-size: xx-large;background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
+<span style="color: #000080; font-weight: bold">1&gt;</span> <span style="color: #0000FF; font-weight: bold">counters_sup</span>:<span style="color: #00A000">start_test</span>().
+<span style="color: #888888">true</span>
+<span style="color: #000080; font-weight: bold">2&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">create</span>(c1).
+<span style="color: #888888">init on a counter called: c1</span>
+<span style="color: #888888">{ok,&lt;0.36.0&gt;}</span>
+<span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">increment</span>(c1,<span style="color: #666666">5</span>).
+<span style="color: #888888">ok</span>
+<span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">count</span>(c1).
+<span style="color: #888888">{ok,5}</span>
+<span style="color: #000080; font-weight: bold">5&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">increment</span>(c1,crash).
+<span style="color: #888888">init on a counter called: c1</span>
+<span style="color: #888888">ok</span>
+<span style="color: #000080; font-weight: bold">6&gt;</span> 
+<span style="color: #888888">=ERROR REPORT==== 29-Oct-2013::02:17:12 ===</span>
+<span style="color: #0044DD">** Generic server &lt;0.36.0&gt; terminating </span>
+<span style="color: #0044DD">** Last message in was {'$gen_cast',{increment,crash}}</span>
+<span style="color: #0044DD">** When Server state == {state,c1,5}</span>
+<span style="color: #0044DD">** Reason for termination == </span>
+<span style="color: #0044DD">** {badarith,[{counter,handle_cast,2,[{file,"src/counter.erl"},{line,59}]},</span>
+<span style="color: #888888">              {gen_server,handle_msg,5,[{file,"gen_server.erl"},{line,604}]},</span>
+<span style="color: #888888">              {proc_lib,init_p_do_apply,3,</span>
+<span style="color: #888888">                        [{file,"proc_lib.erl"},{line,239}]}]}</span>
+
+<span style="color: #000080; font-weight: bold">6&gt;</span> <span style="color: #0000FF; font-weight: bold">counters</span>:<span style="color: #00A000">count</span>(c1).          
+<span style="color: #888888">{ok,5}</span>
+<span style="color: #000080; font-weight: bold">7&gt;</span> 
+</pre></div>
+
+			</section>
+
+			
+			<section style="top: -20px; display: none;" class="future">
+				<h3>Summarising OTP</h3>
+					<ul>
+						<li class="fragment">OTP-ising an application is not trivial at first</li>
+						<li class="fragment">the call flow is a little confusing</li>
+						<li class="fragment">there are overheads in terms of time and effort to get an OTP application right</li>
+						<li class="fragment">but all seasoned Erlangers will urge newcomers to put in the effort - OTP applications play nicer with the wider Erlang ecosystem</li>
+					</ul>
+			</section>
+
+			<section style="top: -20px; display: none;" class="future">
+				<h3>Summarising OTP</h3>
+					But wait, there's still more...
+					<ul>
+						<li class="fragment">gen_fsm - Finite State Machine behaviour</li>
+						<li class="fragment">gen_event - Event system behaviour</li>
+						<li class="fragment">beyond applications - releases etc</li>
+						<li class="fragment">clustering</li>
+						<li class="fragment">Mnesia - distributed database built on ETS and DETS</li>
+					</ul>
+			</section>
+
+			<section style="top: -20px; display: none;" class="future">
+					<h2>Selected Users and Uses</h2>
+				
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Some Erlang Users</h3>
+					<ul>
+						<li>Telecom</li>
+							<ul>
+								<li>Ericsson</li>
+								<li>Nortel</li>
+								<li>T-Mobile</li>
+								<li>Motorola</li>
+							</ul>
+						<li>Gaming</li>
+							<ul>
+								<li>Vendetta Online</li>
+								<li>Battlestar Galactica</li>
+								<li>Call of Duty</li>
+							</ul>	
+
+						<li>Chat / Social Media</li>
+							<ul>
+								<li>Facebook (formerly)</li>
+								<li>Yahoo</li>
+								<li>WhatsApp</li>
+							</ul>
+					</ul>
+
+
+				</section>
+
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Some Erlang Projects</h3>
+					<ul>
+						<li>Web</li>
+							<ul>
+								<li>Yaws - web server</li>
+								<li>Mochiweb - web server</li>
+								<li>Webmachine - web framework</li>
+								<li>Cowboy - web server</li>
+								<li>Chicago Boss - Rails-like web framework</li>
+								<li>Zotonic - CMS</li>
+							</ul>
+					</ul>
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Some Erlang Projects</h3>
+					<ul>
+	
+						<li>Database</li>
+							<ul>
+								<li>CouchDB and derivatives (some moving mostly to C/C++) - document database</li>
+								<li>Riak - distributed K-V store</li>
+								<li>SimpleDB - distributed DB in AWS</li>
+							</ul>
+						<li>Configuration management - Chef v.11</li>
+						<li>Queuing - RabbitMQ</li>
+
+					</ul>
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Some Erlang Projects</h3>
+					<ul>
+						
+						<li>Languages</li>
+							<ul>
+								<li>Elixir - <a href="http://elixir-lang.org/" class="roll"><span data-title="http://elixir-lang.org/">http://elixir-lang.org/</span></a> - Ruby/ Clojure-influenced language built on the Erlang VM</li>
+								
+							</ul>
+
+					</ul>
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h2>Where to go Next...?</h2>
+					<p>
+						
+					</p>
+				</section>
+
+					<section style="top: -20px; display: none;" class="future">
+						<h3>If you're only going to learn one functional language...</h3>
+
+						<p> Consider your situation...</p>
+						<ul>
+							<li class="fragment">If you want to learn hardcore FP principles - Learn You A Haskell</li>
+							<li class="fragment">But if your...:</li>
+							<ul>
+								<li class="fragment">...Ruby on Rails project doesn't scale...</li>
+								<li class="fragment">...Node JS project scales but is a mess of tangled slinkies... *</li>
+								<li class="fragment">...Akka project is elegant but keeps crashing your JVM...</li>
+								<li class="fragment">...C/C++ library is wicked-fast but needs orchestration, scaling and a nice interface...</li>
+								<li class="fragment">...organisation's latest killer service/ web app needs to be robust and scalable...</li>
+							</ul>
+							<li class="fragment">...then Erlang and OTP may be for you</li>
+						</ul>
+						<p>&nbsp;</p>
+						<p class="fragment"> * - <a href="http://www.youtube.com/watch?v=rRbY3TMUcgQ" class="roll"><span data-title="Stolen from Gar1t">Stolen from Gar1t</span></a> </p>
+
+					</section>
+
+					<section style="top: -20px; display: none;" class="future">
+						<h3>Resources</h3>
+
+						<ul>
+							<li>Web etc.</li>
+								<ul>
+									<li><a href="http://erlang.org/" class="roll"><span data-title="http://erlang.org">http://erlang.org</span></a></li>
+									<li><a href="http://erlang.org/doc/" class="roll"><span data-title="http://erlang.org/doc">http://erlang.org/doc</span></a></li>
+									<li><a href="http://erlang.org/mailman/listinfo" class="roll"><span data-title="Mailing lists">Mailing lists</span></a></li>
+									<li>Several IRC channels on freenode</li>
+								</ul>
+							<li>Books - some really original names here!
+							<ul>
+								<li>Highly Recommended:</li>
+									<ul>
+										<li>Learn You Some Erlang for Great Good! (<a href="http://learnyousomeerlang.com/" class="roll"><span data-title="http://learnyousomeerlang.com/">http://learnyousomeerlang.com/</span></a>) - Fred Hebert</li>
+										<li>Erlang and OTP in Action - Logan, Merritt &amp; Carlsson</li>
+									</ul>
+								<li>For general reference:</li>
+									<ul>
+										<li>Programming Erlang - Joe Armstrong </li>
+										<li>Erlang Programming - Cesarini &amp; Thompson</li>
+									</ul>
+							</ul>
+
+				</li></ul></section>
+
+
+				<section style="top: -20px; display: none;" class="future">
+						<h3>Resources</h3>
+
+						<ul>
+							<li>Talks and Slides</li>
+								<ul>
+									<li><a href="http://www.youtube.com/watch?v=G0eBDWigORY" class="roll"><span data-title="Bernard Duggan&#39;s What I wish I&#39;d known when I started">Bernard Duggan's What I wish I'd known when I started</span></a></li>
+									<li><a href="http://lanyrd.com/topics/erlang/coverage/?q=erlang" class="roll"><span data-title="Lanyrd Erlang query ">Lanyrd Erlang query </span></a></li>
+								</ul>
+
+							<li>Movies</li>
+								<ul>
+									<li><a href="http://www.youtube.com/watch?v=xrIjfIjssLE" class="roll"><span data-title="Erlang the Movie">Erlang the Movie</span></a></li>
+									<li><a href="http://www.youtube.com/watch?v=rRbY3TMUcgQ" class="roll"><span data-title="Erlang the Movie II (warning - adult themes)">Erlang the Movie II (warning - adult themes)</span></a></li>
+								</ul>
+						</ul>
+
+
+
+
+				</section>
+
+				<section style="top: -20px; display: none;" class="future">
+					<h3>Thanks</h3>
+					<ul>
+						<li>to OJ and Darren Mackay for getting me interested in Erlang</li>
+						<li>to Ben, Katie and Matt for help and feedback</li>
+					</ul>
+				</section>
+
+				<section class="future" style="top: -20px; display: none;">
+					<h3>Questions</h3>
+					
+				</section>
+
+
+
+				
+
+			</div>
+
+		<div class="progress" style="display: block;"><span style="width: 797.6086956521739px;"></span></div><aside class="controls" style="display: block;"><div class="navigate-left enabled"></div><div class="navigate-right enabled"></div><div class="navigate-up"></div><div class="navigate-down"></div></aside><div class="state-background"></div><div class="pause-overlay"></div></div>
+
+		<script src="./Erlang & OTP - A Quick Introduction..._files/head.min.js"></script>
+		<script src="./Erlang & OTP - A Quick Introduction..._files/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script><script type="text/javascript" src="./Erlang & OTP - A Quick Introduction..._files/highlight.js"></script><script type="text/javascript" src="./Erlang & OTP - A Quick Introduction..._files/zoom.js"></script><script type="text/javascript" src="./Erlang & OTP - A Quick Introduction..._files/notes.js"></script>
+
+	
+
+</body></html>
