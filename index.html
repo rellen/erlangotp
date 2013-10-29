@@ -53,11 +53,9 @@
 					<section>
 						Erlang and the Open Telecom Platform (OTP) are a language, system and platform that are well-established but experiencing a resurgence in popularity
 					</section>
+					
 					<section>
-						PROMINENT PRODUCTS AND USERS
-					</section>
-					<section>
-						<h3>Erlang and the OTP libraries</h3><p> are a 'battle-tested' platform for developing (soft) real-time software with very high: <ul><li>up-times</li><li> availability</li><li>fault-tolerance</li><li>scalability</li><li> reliability</li></ul></p>
+						<h3>Erlang and the OTP libraries</h3><p> are a 'battle-tested' platform for developing (soft) real-time software with very high performance and reliability</p>
 					</section>
 
 					<section>
@@ -73,9 +71,8 @@
 						<ul>
 							<li>electronics/ software engineer by qualification</li>
 							<li>long-term contractor at Carlton &amp; Unitied Breweries' Yatala brewery</li>
-							<li>software development and industrial informatics a.k.a. plant information systems</li>
-							<li>interested in FP due to ongoing Masters-level research into data-flow programming and functional reactive programming (FRP)</li>
-							<li>using Erlang (among other tools) to implement/ demonstrate my ideas</li>
+							<li>engineering and information systems</li>
+							<li>using Erlang (among other tools) for Masters-level research to implement/ demonstrate my ideas</li>
 						</ul>
 
 					</section>
@@ -85,8 +82,8 @@
 						<ul>
 							<li>What is Erlang?</li>
 							<li>A quick history lesson</li>
-							<li>basics of the language</li>
-							<li>the runtime system</li>
+							<li>Basics of the language</li>
+							<li>The runtime system</li>
 							<li>The OTP libraries</li>
 							<li>Users and uses</li>
 							<li>Next steps</li>
@@ -101,7 +98,7 @@
 						<h3>What is Erlang?</h3>
 
 						<ul>
-							<li class="fragment">Erlang is a dynamic programming language with functional features</li>
+							<li>Erlang is a dynamic programming language with functional features</li>
 							<li class="fragment">Labeling Erlang a functional language is somewhat controversial, especially if it is compared against FP languages such as Haskell</li>
 							<li class="fragment">The sequential sub-set of Erlang is, however, pretty much functional</li>
 						</ul>
@@ -139,7 +136,7 @@
 
 
 				<section>
-					Mid 1980's - Ericsson's Computer Science Laboratory tasked with investigating languages for next generation telecomm products
+					Mid 1980's - Ericsson's Computer Science Laboratory tasked with investigating languages for next generation telecom products
 
 				</section>
 
@@ -240,28 +237,11 @@
 							<li class="fragment">strictly/ eagerly evaluated, so no infinite lists etc</li>
 							<li class="fragment">functions, while declarative and SSA, are impure, side effects can occur in any context, deep in the call stack...</li>
 							<li class="fragment">...but it could be argued, however, that side-effects (such as I/O) occur only in the concurrent part of the language (through the actor/ process interface [more later])</li>
+							<li class="fragment">Dialyzer - static code analysis and type checking</li>
 						</ul>
 					</section>
-					<section>
-						<h3>Compiler</h3>
-						<p class="fragment">Erlang compiler (erlc), is not as powerful as, say, GHC</p>
-						<br />
-
-						<p class="fragment">For example, it is not as helpful with things such as automatic loop/fold simplification</p>
 					
-					</section>
-
-					<section>
-					<h3>Developer Tools</h3>
-					<ul>
-						<li>Process manager</li>
-						<li>dbg tracers</li>
-						<li>eunit</li>
-						<li>build tools - rebar</li>
-						<li>Dialyzer - static code analysis and type checking</li>
-					</ul>
-
-				</section>
+					
 
 				</section>
 
@@ -269,35 +249,6 @@
 					<h3>Selected features in (a little) detail</h3>
 				</section>
 
-				<section>
-						<h3>Concise set of basic types</h3>
-						<p class="fragment">Primitives</p>
-						<ul>
-							<li class="fragment">Numbers (integers, floats)</li>
-							<li class="fragment">Atoms (like symbols)</li>
-							<li class="fragment">References</li>
-							<li class="fragment">Binaries - excellent expressiveness</li>
-							<li class="fragment">Pids - process identifiers for Erlang processes (more later)</li>
-							<li class="fragment">Ports</li>
-							<li class="fragment">Funs - first-class function variables / closures</li>
-						</ul>
-					</section>
-
-				<section>
-						<h3>Concise set of basic types</h3>
-						
-						<p>Compounds</p>
-						<ul>
-							<li class="fragment">Tuples (like structures)</li>
-							<li class="fragment">Lists</li>
-							<ul>
-								<li class="fragment">cons syntax</li>
-								<li class="fragment">comprehension syntax</li>
-								<li class="fragment">abstractions and traversals</li>
-							</ul>
-						</ul>
-
-					</section>
 				
 				<section>
 					<h2>Modules and Functions</h2>
@@ -644,10 +595,10 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 						<li class="fragment">BEAM - Bogdan's Erlang Abstract Machine (VM)</li>
 						<li class="fragment">compilation to byte code</li>
 						<ul>
-							<li class="fragment">interpreted, as it was views that the BEAM interpreter was fast enough</li>
+							<li class="fragment">originally just interpreted, as it was viewed that the BEAM interpreter was fast enough</li>
 							<li class="fragment">more recently, a native JiT compiler has been used (HiPE)</li>
 						</ul>
-						<li class="fragment">From now on in this talk, VM and ERTS are synonymous</li> 
+						<li class="fragment">From now on in this talk VM, BEAM and ERTS are synonymous</li> 
 					</ul>
 
 				</section>
@@ -792,28 +743,6 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 
 
 				<section>
-					<h3>Performance and reliability</h3>
-					<ul>
-						<li class="fragment">The VM is designed for (soft) real-time performance...</li>
-							<ul>
-								<li class="fragment">...but not necessarily raw speed</li>
-								<li class="fragment">NIFs or Ports may be needed for speed-critical code</li>
-							</ul>
-						<li class="fragment">The VM is designed for reliability...</li>
-							<ul>
-								<li class="fragment">...but it is not 100% bullet-proof</li>
-								<li class="fragment">buggy NIFs or Linked-In ports can crash the VM</li>
-								<li class="fragment">buggy receive blocks can leave messages on the queue and leak memory</li>
-								<li class="fragment">body-recursive function calls can blow the stack</li>
-
-							</ul>
-					</ul>
-
-				</section>
-
-
-
-				<section>
 					<h2>The Open Telecom Platform (OTP) Libraries</h2>
 					<p>
 						
@@ -841,6 +770,8 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 						<ul>
 							<li>Writing robust concurrent code by hand with spawns, !, receive, links and monitors for each service is cumbersome and error prone</li>
 							<li class="fragment">A simple synchronous call to a process to do some work and return a result could be a dozen lines of code to make fault-tolerant</li>
+							<li class="fragment">buggy receive blocks can leave messages on the queue and leak memory</li>
+							<li class="fragment">body-recursive function calls can blow the stack</li>
 							<li class="fragment">The OTP libraries provide a framework to do concurrency robustly, in a well-thought out and well-tested way</li>
 							<li class="fragment">The programmer is forced to think about process interaction and reliability</li>
 						</ul>
@@ -1314,11 +1245,6 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 								<li>Nortel</li>
 								<li>T-Mobile</li>
 								<li>Motorola</li>
-							</ul>
-						<li>Trading/ Betting</li>
-							<ul>
-								<li>Goldman Sachs</li>
-								<li>Smarkets</li>
 							</ul>
 						<li>Gaming</li>
 							<ul>
