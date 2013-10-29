@@ -46,12 +46,14 @@
 					</p>
 				</section>
 
-				<section>
+				
 					<section>
 						<h2>Summary</h2>
 					</section>
 					<section>
-						Erlang and the Open Telecom Platform (OTP) are a language, system and platform that are well-established but experiencing a resurgence in popularity
+						<p>Erlang and the Open Telecom Platform (OTP) are a language, system and platform that are well-established but experiencing a resurgence in popularity</p>
+						<img src="img/Erlanglogo.png" />
+
 					</section>
 					
 					<section>
@@ -65,12 +67,13 @@
 					
 					
 					
-				</section>
+				
 				<section>
 						<h2>About me...</h2>
+						<img style="width: 20%" src="img/me.jpg" />
 						<ul>
 							<li>electronics/ software engineer by qualification</li>
-							<li>long-term contractor at Carlton &amp; Unitied Breweries' Yatala brewery</li>
+							<li>contractor at Carlton &amp; Unitied Breweries' Yatala brewery</li>
 							<li>engineering and information systems</li>
 							<li>using Erlang (among other tools) for Masters-level research to implement/ demonstrate my ideas</li>
 						</ul>
@@ -187,6 +190,7 @@
 				</section>
 
 				<section>
+					<img src="img/facepalm.jpeg" />
 					<p>In early 1998, Erlang was banned from Ericsson, citing a want to be a consumer of software technologies, not a producer</p>
 					<p class="fragment">Joe Armstrong and many of the Erlang team left Ericsson at that time</p>
 					<p class="fragment">In late 1998, Erlang and OTP were released under an Open Source license and have been freely available ever since</p>
@@ -198,7 +202,7 @@
 					<h2>Basics of the language</h2>
 				</section>
 
-				<section>
+				
 					<section>
 						<h3>Erlang, as a language, is fairly simple and concise</h3>
 						<ul>
@@ -226,6 +230,7 @@
 
 						<p class="fragment">...and the sequential sub-set of the language can be considered functional</p>
 
+
 					</section>
 					
 					<section>
@@ -243,7 +248,6 @@
 					
 					
 
-				</section>
 
 				<section>
 					<h3>Selected features in (a little) detail</h3>
@@ -316,7 +320,7 @@
 				</section>
 
 				<section>
-					<h3>Recursion</h3>
+					<h3>Do you mean Recursion?</h3>
 					<p class="fragment">Erlang does not have loops, recursion is used instead</p>
 
 <!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">-<span style="color: #999999; font-weight: bold">module</span>(factorial).
@@ -438,15 +442,20 @@
 						<li class="fragment">The concurrency model is asynchronous message passing between light-weight processes</li>
 						<li class="fragment">Often referred to as the actor model</li>
 						<li class="fragment">Actors are not purely functional, as the result of an asynchronous message is effectively <code>void</code>
-						<li class="fragment">Joe Armstrong refers to Erlang as "possibly the only object-oriented language" (Alan Kay OO):</li>
-						<ul>
-							
-							<li class="fragment">Encapsulation</li>
-							<li class="fragment">Message passing</li>
-						</ul>
+						
 						<li class="fragment">Most of the well-known attributes of Erlang are based on it's concurrency implementation</li>
 					</ul>
 
+				</section>
+
+				<section>
+					<h3>The actor model</h3>
+					<img src="img/jason.jpeg" />
+					<li class="fragment">Joe Armstrong refers to Erlang as "possibly the only object-oriented language" (Alan Kay OO):</li>
+						<ul>
+							<li class="fragment">Encapsulation</li>
+							<li class="fragment">Message passing</li>
+						</ul>
 				</section>
 
 
@@ -563,6 +572,12 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 
 				</section>
 
+				<section>
+					<h3>Process links</h3>
+					<img style="width: 65%" src="img/error05.gif" />
+					<small>http://www.erlang.org/course/error05.gif</small>
+				</section>
+
 
 				<section>
 					<h3>Monitors</h3>
@@ -646,6 +661,15 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 					</ul>
 
 				</section>
+
+				<section>
+					<h3>Processes schedulers</h3>
+					<img style="width:55%" src="img/schedulers.png" />
+					<small>http://learnyousomeerlang.com/static/img/schedulers.png</small>
+
+				</section>
+
+				
 
 				
 				<section>
@@ -802,6 +826,13 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 							<li class="fragment">processes under supervision can be workers (processes that implement functionality) or other supervisors</li>
 							<li class="fragment">the supervision relationship then forms a tree, with workers at the leaf nodes</li>
 						</ul>
+					</section>
+
+					<section>
+						<h3>Supervision Tree </h3>
+						<img src="img/sup-tree.png" style="width: 55%"/>
+						<small>http://learnyousomeerlang.com/static/img/sup-tree.png</small>
+
 					</section>
 
 					<section>
@@ -1332,13 +1363,15 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 							</ul>
 							<li class="fragment">...then Erlang and OTP may be for you</li>
 						</ul>
-						<p>&nbsp;</p>
+
 						<p class="fragment"> * - <a href="http://www.youtube.com/watch?v=rRbY3TMUcgQ">Stolen from Gar1t</a> </p>
 
 					</section>
 
 					<section>
 						<h3>Resources</h3>
+
+						
 
 						<ul>
 							<li>Web etc.</li>
@@ -1348,19 +1381,40 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 									<li><a href="http://erlang.org/mailman/listinfo">Mailing lists</a></li>
 									<li>Several IRC channels on freenode</li>
 								</ul>
-							<li>Books - some really original names here!
-							<ul>
-								<li>Highly Recommended:</li>
-									<ul>
-										<li>Learn You Some Erlang for Great Good! (<a href="http://learnyousomeerlang.com/">http://learnyousomeerlang.com/</a>) - Fred Hebert</li>
-										<li>Erlang and OTP in Action - Logan, Merritt &amp; Carlsson</li>
-									</ul>
-								<li>For general reference:</li>
-									<ul>
-										<li>Programming Erlang - Joe Armstrong </li>
-										<li>Erlang Programming - Cesarini &amp; Thompson</li>
-									</ul>
 							</ul>
+
+				</section>
+
+				<section>
+						<h3>Resources</h3>
+
+						<img style="width:55%" src="img/books.jpg" />
+
+				
+				</section>
+
+				<section>
+						<h3>Resources</h3>
+
+							<ul>
+							<li>Books - some really original names here!</li>
+								<ul>
+									<li>Highly Recommended:</li>
+										<ul>
+											<li>Learn You Some Erlang for Great Good! <a href="http://learnyousomeerlang.com/">http://learnyousomeerlang.com/</a> - Fred Hébert</li>
+											<li>Erlang and OTP in Action - Logan, Merritt &amp; Carlsson</li>
+										</ul>
+									<li>For general reference:</li>
+										<ul>
+											<li>Programming Erlang - Joe Armstrong </li>
+											<li>Erlang Programming - Cesarini &amp; Thompson</li>
+										</ul>
+								</ul>
+							</ul>
+
+					
+
+						
 
 				</section>
 
@@ -1375,6 +1429,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 									<li><a href="http://lanyrd.com/topics/erlang/coverage/?q=erlang">Lanyrd Erlang query </a></li>
 								</ul>
 
+
 							<li>Movies</li>
 								<ul>
 									<li><a href="http://www.youtube.com/watch?v=xrIjfIjssLE">Erlang the Movie</a></li>
@@ -1382,7 +1437,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 								</ul>
 						</ul>
 
-
+						<img src="img/ErlangTheMovie.jpg" />
 
 
 				</section>
