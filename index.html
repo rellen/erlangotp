@@ -139,12 +139,18 @@
 
 
 				<section>
-					Mid 1980's - Ericsson's Computer Science Laboratory tasked with investigating languages for next generation telecom products
+					Mid 1980's - Ericsson's Computer Science Laboratory was tasked with investigating languages for next generation telecom products
 
 				</section>
 
 				<section>
 					<p>Joe Armstrong, Robert Virding and Mike Williams, under the supervision of Bjarne Däcker were tasked with prototyping telecom applications with existing languages</p>
+
+					
+					<img style="width: 20%" src="img/joe.jpg" />
+					<img style="width: 20%" src="img/robert.jpeg" />
+					<img style="width: 20%" src="img/mike.jpeg" />
+					<img style="width: 22%" src="img/bjarne.jpg" />
 
 
 				</section>
@@ -191,7 +197,7 @@
 
 				<section>
 					<img src="img/facepalm.jpeg" />
-					<p>In early 1998, Erlang was banned from Ericsson, citing a want to be a consumer of software technologies, not a producer</p>
+					<p>In early 1998, Ericsson banned Erlang for new products, citing a want to be a consumer of software technologies, not a producer</p>
 					<p class="fragment">Joe Armstrong and many of the Erlang team left Ericsson at that time</p>
 					<p class="fragment">In late 1998, Erlang and OTP were released under an Open Source license and have been freely available ever since</p>
 					<p class="fragment">Subsequently the ban has been lifted and Armstrong rejoined Ericsson in 2004</p>
@@ -372,7 +378,17 @@
 				</section>
 
 				<section>
-					<h3>Higher Order Functions</h3>
+					<h3>Higher Order Functions (HOFs)</h3>
+					<img src="img/hof.jpg" />
+					<small>http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/David_Hasselhoff_2009.jpg/220px-David_Hasselhoff_2009.jpg</small>
+					
+
+
+				</section>
+
+				<section>
+					<h3>Higher Order Functions (HOFs)</h3>
+					
 					<p>Key functional programming capability - create, pass around and call functions as variables</p>
 
 					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #888888">Eshell V5.10.3  (abort with ^G)</span>
@@ -387,10 +403,15 @@
 
 				<section>
 					<h3>Closures</h3>
+					<img src="img/closure.jpg" />
 					<ul>	
 						<li>Annonymously-created functions remember their calling context</li>
 						<li class="fragment">This capability can be used to implement closures - functions that are 'customised' by their calling context to be used later</li>
 					</li>
+				</section>
+				<section>
+					<h3>Closures</h3>
+					
 					<!-- HTML generated using hilite.me --><div class="fragment" style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #000080; font-weight: bold">3&gt;</span> <span style="color: #B8860B">Fb</span> <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">fun</span>(<span style="color: #B8860B">X</span>) <span style="color: #666666">-&gt;</span> <span style="color: #AA22FF; font-weight: bold">fun</span>(<span style="color: #B8860B">Y</span>) <span style="color: #666666">-&gt;</span> <span style="color: #B8860B">X</span> <span style="color: #666666">+</span> <span style="color: #B8860B">Y</span> <span style="color: #AA22FF; font-weight: bold">end</span> <span style="color: #AA22FF; font-weight: bold">end</span>.
 <span style="color: #888888">#Fun&lt;erl_eval.6.80484245&gt;</span>
 <span style="color: #000080; font-weight: bold">4&gt;</span> <span style="color: #B8860B">Fc</span> <span style="color: #666666">=</span> <span style="color: #B8860B">Fb</span>(<span style="color: #666666">5</span>).
@@ -441,8 +462,6 @@
 						<li>Built into the language and runtime, not the OS and not a library</li>
 						<li class="fragment">The concurrency model is asynchronous message passing between light-weight processes</li>
 						<li class="fragment">Often referred to as the actor model</li>
-						<li class="fragment">Actors are not purely functional, as the result of an asynchronous message is effectively <code>void</code>
-						
 						<li class="fragment">Most of the well-known attributes of Erlang are based on it's concurrency implementation</li>
 					</ul>
 
@@ -451,11 +470,14 @@
 				<section>
 					<h3>The actor model</h3>
 					<img src="img/jason.jpeg" />
-					<li class="fragment">Joe Armstrong refers to Erlang as "possibly the only object-oriented language" (Alan Kay OO):</li>
+					<ul>
+						<li class="fragment">Joe Armstrong refers to Erlang as "possibly the only object-oriented language" (Alan Kay OO):</li>
 						<ul>
 							<li class="fragment">Encapsulation</li>
 							<li class="fragment">Message passing</li>
 						</ul>
+						<li class="fragment">Actors are not purely functional, as the result of an asynchronous message is effectively of type <code>void</code>
+					</ul>
 				</section>
 
 
@@ -562,6 +584,12 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 				</section>
 
 				<section>
+					<h3>Two processes - one module </h3>
+					<p>Process interaction for the count function</p>
+					<img src="img/counter.png" />
+				</section>
+
+				<section>
 					<h3>Process links</h3>
 					<ul>
 						<li>Links can be made between processes</li>
@@ -577,7 +605,6 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 					<img style="width: 65%" src="img/error05.gif" />
 					<small>http://www.erlang.org/course/error05.gif</small>
 				</section>
-
 
 				<section>
 					<h2>Erlang: the system</h2>
@@ -761,9 +788,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 
 				<section>
 					<h2>The Open Telecom Platform (OTP) Libraries</h2>
-					<p>
-						
-					</p>
+					<img src="img/otp.jpg" />
 				</section>
 
 				<section>
@@ -1082,6 +1107,7 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 
 				</section>
 
+
 				<section>
 					<h3>Application API</h3>
 					<p>Convention is to abstract into an API that hides the OTP details</p>
@@ -1136,6 +1162,12 @@ Pid = spawn(module, function, [Argument0, Argument1, ..., ArgumentN]).
 <span style="color: #00A000">delete</span>(<span style="color: #B8860B">Pid</span>) <span style="color: #666666">-&gt;</span>
     <span style="color: #0000FF; font-weight: bold">ets</span>:<span style="color: #00A000">match_delete</span>(<span style="color: #666666">?</span><span style="color: #B8860B">TABLE_ID</span>, {&#39;_&#39;, <span style="color: #B8860B">Pid</span>}).
 </pre></div>
+
+				</section>
+
+				<section>
+					<h3>Calls between client and server</h3>
+					<img style="width: 60%" src="img/gen_server_call.png" />
 
 				</section>	
 
